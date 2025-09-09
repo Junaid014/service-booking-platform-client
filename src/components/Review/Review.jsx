@@ -73,7 +73,7 @@ const ReviewCard = ({ review }) => {
             className="w-10 h-10 rounded-full object-cover"
           />
         ) : (
-          <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white font-bold">
+          <div className="w-10 h-10 rounded-full bg-[#cc3273] flex items-center justify-center border text-white font-bold">
             {initials}
           </div>
         )}
