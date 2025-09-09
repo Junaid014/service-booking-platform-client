@@ -93,7 +93,7 @@ const Review = () => {
   return (
     <section className="py-12 lg:flex justify-between gap-6">
       {/* Left Column */}
-      <div className="flex mb-0 md:mb-6 lg:w-1/4 lg:flex-col gap-6">
+      <div className="flex mb-0 md:mb-6 lg:w-1/4 lg:flex-col gap-1.5 md:gap-6">
         <ReviewCard review={reviews[0]} />
         <ReviewCard review={reviews[3]} />
       </div>
@@ -110,7 +110,7 @@ const Review = () => {
       {/* Right Column */}
       <div className="flex lg:w-1/4 mt-6 lg:mt-0 flex-col gap-6">
         <ReviewCard review={reviews[2]} />
-        <div className="mt-0">
+        <div className="mt-0 lg:mt-4">
           <ReviewCard review={reviews[7]} />
         </div>
       </div>
