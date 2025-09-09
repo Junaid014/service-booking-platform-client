@@ -3,14 +3,14 @@ import { FaMaskFace } from "react-icons/fa6";
 
 export default function WhyChooseUs() {
   const features = [
-    { icon: <FaMaskFace className="w-12 h-18 text-pink-600" />, title: ["Ensuring", "Masks"] },
-    { icon: <Headphones className="w-12 h-18 text-pink-600" />, title: ["24/7", "Support"] },
-    { icon: <SprayCan className="w-12 h-18 text-pink-600" />, title: ["Sanitising", "Hands & Equipment"] },
-    { icon: <Hand className="w-12 h-18 text-pink-600" />, title: ["Ensuring", "Gloves"] },
+    { icon: <FaMaskFace className="w-12 h-14 lg:h-18 text-pink-600" />, title: ["Ensuring", "Masks"] },
+    { icon: <Headphones className="w-12 h-14 lg:h-18 text-pink-600" />, title: ["24/7", "Support"] },
+    { icon: <SprayCan className="w-12 h-14 lg:h-18 text-pink-600" />, title: ["Sanitising", "Hands & Equipment"] },
+    { icon: <Hand className="w-12 h-14 lg:h-18 text-pink-600" />, title: ["Ensuring", "Gloves"] },
   ];
 
   return (
-    <section className="bg-gray-50 py-12">
+    <section className="bg-gray-100 py-12">
       {/* Heading */}
       <div className="px-4 lg:px-12">
         <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
@@ -34,7 +34,7 @@ export default function WhyChooseUs() {
         </div>
 
         {/* Left side - Features */}
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-6 order-2 lg:order-1">
+        <div className="grid md:grid-cols-2 grid-cols-2 gap-6 order-2 lg:order-1">
           {features.map((f, i) => (
             <div
               key={i}

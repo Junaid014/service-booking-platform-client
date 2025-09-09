@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router";
 import { GiGraduateCap } from "react-icons/gi";
-
+import { House } from "lucide-react";
 const Navbar = () => {
        const [isOpen, setIsOpen] = useState(false);
 
@@ -22,7 +22,7 @@ const Navbar = () => {
                      </li>
                      <li>
                             <NavLink
-                                   to="/create-service"
+                                   to="/createService"
                                    className={({ isActive }) =>
                                           isActive
                                                  ? " underline font-semibold"
@@ -40,7 +40,7 @@ const Navbar = () => {
                      <div className="flex items-center justify-between max-w-[1460px] lg:px-0 px-3 md:px-3  mx-auto min-h-16 relative">
                             {/* Left: Logo */}
                             <Link to="/" className="flex gap-2 items-center">
-                                   <GiGraduateCap className="md:text-4xl text-xl text-[#cc3273]" />
+                                   <House className="md:text-5xl text-xl text-[#cc3273]" />
                                    <span className="md:text-2xl text-base  font-extrabold">
                                           Fixify
                                    </span>

@@ -5,8 +5,10 @@ import WhyChooseUs from '../../components/WhyChooseUs/WhyChooseUs';
 const Home = () => {
        return (
               <div>
-                     <Review/>
+               
                      <WhyChooseUs/>
+                     <Review/>
+                     
               </div>
        );
 };

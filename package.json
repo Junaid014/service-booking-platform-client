@@ -11,11 +11,15 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
+    "axios": "^1.11.0",
+    "browser-image-compression": "^2.0.2",
     "lucide-react": "^0.542.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-hook-form": "^7.62.0",
     "react-icons": "^5.5.0",
     "react-router": "^7.8.2",
+    "sweetalert2": "^11.23.0",
     "tailwindcss": "^4.1.13"
   },
   "devDependencies": {
