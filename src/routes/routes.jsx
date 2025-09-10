@@ -3,7 +3,7 @@ import {
 } from "react-router";
 import Root from "./Root";
 import Home from "../pages/Home/Home";
-import AddService from "../pages/Services/AddServices";
+import CreateServices from "../components/Services/CreateServices";
 
 
 
@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
       },
       {
         path:'createService',
-        Component:AddService
+        Component:CreateServices
       }
 
     ]}

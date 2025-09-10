@@ -4,7 +4,7 @@ import useAxios from "../../hooks/useAxios";
 import imageCompression from "browser-image-compression"; 
 import { useEffect, useRef, useState } from "react";
 
-const AddService = () => {
+const CreateServices = () => {
   const { register, handleSubmit, reset, setValue } = useForm();
   const axios = useAxios();
   // const { user } = useAuth(); // logged-in user data
@@ -15,19 +15,23 @@ const AddService = () => {
   const wrapperRef = useRef(null);
 
   // suggestion list (you can expand this list)
-  const suggestions = [
-    "Plumbing",
-    "Beauty",
-    "Cleaning",
-    "Electrical",
-    "Gardening",
-    "Pest Control",
-    "Furniture Assembly",
-    "TV Mounting",
-    "General Mounting",
-    "Painting",
-    "Trending",
-  ];
+ const suggestions = [
+  "Beauty & Wellness",
+  "Cleaning",
+  "Creative & Media",
+  "Education",
+  "Electrical",
+  "Event & Lifestyle",
+  "Furniture Assembly",
+  "Gardening",
+  "General Mounting",
+  "IT & Tech Services",
+  "Painting",
+  "Pest Control",
+  "Plumbing",
+  "TV Mounting",
+  "Trending"
+];
 
   useEffect(() => {
     // filter suggestions as user types
@@ -283,4 +287,4 @@ const AddService = () => {
   );
 };
 
-export default AddService;
+export default CreateServices;
