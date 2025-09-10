@@ -36,7 +36,7 @@ const Navbar = () => {
        );
 
        return (
-              <div className="w-full bg-white backdrop-blur-md fixed top-0 left-0 right-0 shadow-sm z-50">
+              <div className="w-full bg-white  backdrop-blur-md fixed top-0 left-0 right-0 shadow-sm z-50">
                      <div className="flex items-center justify-between max-w-[1460px] lg:px-0 px-3 md:px-3  mx-auto min-h-16 relative">
                             {/* Left: Logo */}
                             <Link to="/" className="flex gap-2 items-center">
