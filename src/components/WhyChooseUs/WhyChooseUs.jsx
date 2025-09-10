@@ -10,7 +10,7 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section className="bg-gray-100 py-12">
+    <section className=" py-12">
       {/* Heading */}
       <div className="px-4 lg:px-12">
         <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
@@ -22,7 +22,7 @@ export default function WhyChooseUs() {
       </div>
 
       {/* Content */}
-      <div className="mx-auto px-4 lg:px-12 grid lg:grid-cols-2 grid-cols-1 gap-10 items-center">
+      <div className="mx-auto px-4 lg:px-0 grid lg:grid-cols-2 grid-cols-1 gap-10 items-center">
         
         {/* Right side*/}
         <div className="relative order-1 lg:order-2">
@@ -38,7 +38,7 @@ export default function WhyChooseUs() {
           {features.map((f, i) => (
             <div
               key={i}
-              className="flex items-center py-3 md:py-6 gap-3 bg-white shadow-sm rounded-xl p-4"
+              className="flex items-center lg:pl-20 py-3 md:py-7.5 gap-6 bg-white shadow-sm rounded-xl p-4"
             >
               {f.icon}
               <p className="text-gray-700 text-base font-semibold leading-snug">

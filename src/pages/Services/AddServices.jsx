@@ -1,13 +1,56 @@
-
 import { useForm } from "react-hook-form";
 // import { useAuth } from "@/contexts/AuthContext"; 
 import useAxios from "../../hooks/useAxios";
 import imageCompression from "browser-image-compression"; 
+import { useEffect, useRef, useState } from "react";
 
 const AddService = () => {
   const { register, handleSubmit, reset, setValue } = useForm();
   const axios = useAxios();
   // const { user } = useAuth(); // logged-in user data
+
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [query, setQuery] = useState("");
+  const [filtered, setFiltered] = useState([]);
+  const wrapperRef = useRef(null);
+
+  // suggestion list (you can expand this list)
+  const suggestions = [
+    "Plumbing",
+    "Beauty",
+    "Cleaning",
+    "Electrical",
+    "Gardening",
+    "Pest Control",
+    "Furniture Assembly",
+    "TV Mounting",
+    "General Mounting",
+    "Painting",
+    "Trending",
+  ];
+
+  useEffect(() => {
+    // filter suggestions as user types
+    if (!query) {
+      setFiltered(suggestions);
+    } else {
+      const q = query.toLowerCase();
+      setFiltered(
+        suggestions.filter((s) => s.toLowerCase().includes(q))
+      );
+    }
+  }, [query]);
+
+  useEffect(() => {
+    // click outside to close suggestions
+    function handleClickOutside(e) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+        setShowSuggestions(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const onSubmit = async (data) => {
     const serviceData = {
@@ -26,13 +69,12 @@ const AddService = () => {
     }
   };
 
-  
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
     try {
-      // compress image before upload
+     
       const options = {
         maxSizeMB: 0.2, 
         maxWidthOrHeight: 1920,
@@ -61,15 +103,22 @@ const AddService = () => {
       const data = await res.json();
       console.log("Uploaded Image:", data.secure_url);
 
-      // set image url into react-hook-form
+      
       setValue("image", data.secure_url);
     } catch (error) {
       console.error("Image Upload Failed:", error);
     }
   };
 
+  // when user clicks a suggestion: set form value and input UI
+  const handleSelectSuggestion = (value) => {
+    setValue("category", value, { shouldValidate: true, shouldDirty: true });
+    setQuery(value);
+    setShowSuggestions(false);
+  };
+
   return (
-    <div className="bg-[#fefefe] mb-18 hover:bg-[#f9f9f9] shadow-lg rounded px-2 lg:px-14 pt-14 pb-8 w-full  mx-auto">
+    <div className=" mb-18  shadow-sm rounded px-4 lg:px-2 pt-14 pb-8 w-full  mx-auto">
       <h2 className="text-xl md:text-3xl text-gray-700 font-semibold roboto text-center mb-6">
         Add Service
       </h2>
@@ -89,13 +138,47 @@ const AddService = () => {
         </div>
 
         {/* Category */}
-        <div>
+        {/* Replaced with searchable suggestions UI but kept styling consistent */}
+        <div ref={wrapperRef} className="relative">
           <label className="label font-medium">Category</label>
+
+          {/* Input is still registered with react-hook-form */}
           <input
             {...register("category", { required: true })}
             className="input focus:outline-none focus:ring-0 focus:border-gray-600 w-full"
             placeholder="Category"
+            // keep it effectively uncontrolled for react-hook-form, but update UI via query
+            onFocus={(e) => {
+              setShowSuggestions(true);
+              // sync query with current input value
+              setQuery(e.target.value || "");
+            }}
+            onInput={(e) => {
+              setQuery(e.target.value);
+              // we do not call setValue on every keystroke because register keeps the value,
+              // but to be safe (and to ensure formValue sync), we call setValue here:
+              setValue("category", e.target.value, { shouldDirty: true });
+            }}
           />
+
+          {/* Suggestions dropdown */}
+          {showSuggestions && filtered.length > 0 && (
+            <ul className="absolute z-50 mt-2 w-full bg-white border border-gray-200 rounded-md max-h-56 overflow-auto shadow-sm">
+              {filtered.map((sugg, idx) => (
+                <li
+                  key={idx}
+                  onMouseDown={(e) => {
+                    // use onMouseDown to avoid losing focus before click registers
+                    e.preventDefault();
+                    handleSelectSuggestion(sugg);
+                  }}
+                  className="px-4 py-3 cursor-pointer hover:bg-gray-100 text-sm"
+                >
+                  {sugg}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         {/* Price per Hour */}
@@ -132,27 +215,7 @@ const AddService = () => {
           />
         </div>
 
-        {/* Keywords (Dropdown Single Select) */}
-        <div className="form-control ">
-          <label className="label">
-            <span className="label-text text-gray-900 font-medium">
-              Service Keyword
-            </span>
-          </label>
-          <select
-            {...register("keywords", { required: true })}
-            className="w-full px-3 py-2 border border-gray-300 text-sm focus:outline-none focus:ring-0 focus:border-gray-600"
-          >
-            <option value="">Select Keyword</option>
-            <option value="Plumbing">Plumbing</option>
-            <option value="Beauty">Beauty</option>
-            <option value="Cleaning">Cleaning</option>
-            <option value="Electrical">Electrical</option>
-            <option value="Gardening">Gardening</option>
-            <option value="Pest Control">Pest Control</option>
-          </select>
-        </div>
-
+       
 
         {/* User Name */}
         {/* <div>
@@ -176,8 +239,29 @@ const AddService = () => {
           />
         </div> */}
 
+        {/* ✅ New User Name (Active Field) */}
+        <div>
+          <label className="label font-medium">Provider Name</label>
+          <input
+            {...register("userName", { required: true })}
+            className="input focus:outline-none focus:ring-0 focus:border-gray-600 w-full"
+            placeholder="Enter Provider Name"
+          />
+        </div>
+
+        {/* ✅ New User Email (Active Field) */}
+        <div>
+          <label className="label font-medium">Provider Email</label>
+          <input
+            type="email"
+            {...register("userEmail", { required: true })}
+            className="input focus:outline-none focus:ring-0 focus:border-gray-600 w-full"
+            placeholder="Enter Provider Email"
+          />
+        </div>
+
         {/* Description Full Width */}
-        <div className="md:col-span-2">
+        <div className="md:col-span-1">
           <label className="label font-medium">Description</label>
           <textarea
             {...register("description", { required: true })}
@@ -200,4 +284,3 @@ const AddService = () => {
 };
 
 export default AddService;
-
