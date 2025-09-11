@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import imageCompression from "browser-image-compression";
 
-const ManageServices = () => {
+const MyServices = () => {
   const axiosSecure = useAxiosSecure();
   const [selectedService, setSelectedService] = useState(null);
   const [uploading, setUploading] = useState(false); 
@@ -205,4 +205,4 @@ const ManageServices = () => {
   );
 };
 
-export default ManageServices;
+export default MyServices;
