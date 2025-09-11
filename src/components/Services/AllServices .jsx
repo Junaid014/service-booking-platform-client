@@ -1,6 +1,8 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { Link } from 'react-router';
+
 
 const AllServices = () => {
   const axiosSecure = useAxiosSecure();
@@ -13,16 +15,18 @@ const AllServices = () => {
     },
   });
 
+  
+
   if (isLoading) {
     return <div className="text-center text-lg font-semibold py-10">Loading...</div>;
   }
 
   return (
-    <div className="px-4 py-8 ">
+    <div className="px-4 py-8 mt-12">
       <h2 className="md:text-4xl text-xl font-bold mb-6 text-gray-800">Services We Provide</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-12">
         {services.map(service => (
-         <div
+         <Link to={`/services/${service._id}`}
   key={service._id}
   className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition duration-300"
 >
@@ -39,7 +43,7 @@ const AllServices = () => {
       Price: <span className='font-semibold'>{service.price} $</span> per/hour
     </p>
   </div>
-</div>
+</Link>
 
         ))}
       </div>

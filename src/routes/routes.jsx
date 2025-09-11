@@ -4,6 +4,7 @@ import {
 import Root from "./Root";
 import Home from "../pages/Home/Home";
 import CreateServices from "../components/Services/CreateServices";
+import ServiceDetails from "../components/Services/ServiceDetails";
 
 
 
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
       {
         path:'createService',
         Component:CreateServices
+      },
+      {
+        path:'services/:id',
+        Component: ServiceDetails
       }
 
     ]}

@@ -17,6 +17,7 @@ import {
   Scissors,
 } from "lucide-react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Loading from "../../Shared/Loading";
 
 
 const categories = [
@@ -56,7 +57,7 @@ export default function CategoryServices() {
     refetchOnWindowFocus: false,
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading/>;
 
   return (
     <div className="md:px-0 px-2 mt-20">
@@ -70,7 +71,7 @@ export default function CategoryServices() {
               key={cat.name}
               type="button"
               onClick={() => setSelectedCategory(cat.name)}
-              className="flex flex-col items-center  justify-center border  border-gray-200   p-3 rounded-xl transition"
+              className="flex flex-col items-center cursor-pointer  justify-center border  border-gray-200   p-3 rounded-xl transition"
               style={{
                 backgroundColor: isActive ? cat.color : "#fff",
                 color: isActive ? "#111827" : "#6b7280",
@@ -97,7 +98,7 @@ export default function CategoryServices() {
           services.map((s) => (
             <span
               key={s._id}
-              className="px-4 py-2 border rounded-full text-sm cursor-pointer hover:bg-gray-100"
+              className="px-4 py-2 border rounded-full text-sm cursor-pointer bg-white hover:bg-gray-100"
             >
 
         {/*------------------- will be as link soon---------------------- */}

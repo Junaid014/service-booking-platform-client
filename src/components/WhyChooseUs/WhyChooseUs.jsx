@@ -38,10 +38,10 @@ export default function WhyChooseUs() {
           {features.map((f, i) => (
             <div
               key={i}
-              className="flex items-center lg:pl-20 py-3 md:py-7.5 gap-6 bg-white shadow-sm rounded-xl p-4"
+              className="flex items-center justify-center md::pl-20 py-3 md:py-7.5 md:gap-6 gap-4 bg-white shadow-sm rounded-xl md:px-0 px-1.5 md:p-4"
             >
               {f.icon}
-              <p className="text-gray-700 text-base font-semibold leading-snug">
+              <p className="text-gray-700 md:text-base text-sm md:font-semibold leading-snug">
                 {f.title.map((line, j) => (
                   <span key={j} className="block">
                     {line}
