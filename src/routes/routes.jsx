@@ -5,6 +5,7 @@ import Root from "./Root";
 import Home from "../pages/Home/Home";
 import CreateServices from "../components/Services/CreateServices";
 import ServiceDetails from "../components/Services/ServiceDetails";
+import MyServices from "../pages/Provider/MyServices";
 
 
 
@@ -27,6 +28,12 @@ export const router = createBrowserRouter([
       {
         path:'services/:id',
         Component: ServiceDetails
+      },
+
+      // will be provider route 
+      {
+        path:'myServices',
+        element:<MyServices/>
       }
 
     ]}

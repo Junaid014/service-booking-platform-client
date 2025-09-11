@@ -58,9 +58,9 @@ const ServiceDetails = () => {
   }
 
   return (
-    <div className="flex gap-4 p-4">
+    <div className="flex md:flex-row  flex-col-reverse gap-4 ">
       {/* Left Side */}
-      <div className="w-2/5 bg-gray-50 p-5 rounded-2xl border border-gray-200 shadow-sm">
+      <div className="md:w-2/5 bg-gray-50 p-5 rounded-2xl border border-gray-200 shadow-sm">
         <h2 className="text-xl font-bold mb-5 text-gray-900">
           Explore More in {service?.category}
         </h2>
@@ -105,7 +105,7 @@ const ServiceDetails = () => {
       </div>
 
       {/* Right Side */}
-      <div className="w-3/5 bg-white p-4 rounded-xl shadow">
+      <div className="md:w-3/5 bg-white p-4 rounded-xl shadow">
         <h2 className="text-xl font-bold mb-3">{service?.title}</h2>
         <img
           src={service?.image}
