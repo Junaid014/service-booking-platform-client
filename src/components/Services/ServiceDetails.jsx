@@ -46,7 +46,7 @@ const ServiceDetails = () => {
 
   const visibleServices = showAll
     ? categoryServices
-    : categoryServices.slice(0, 4);
+    : categoryServices.slice(0, 2);
 
 
   if (serviceLoading || categoryLoading) {
@@ -92,7 +92,7 @@ const ServiceDetails = () => {
           ))}
         </div>
 
-        {categoryServices.length > 3 && !showAll && (
+        {categoryServices.length > 2 && !showAll && (
   <div className="mt-4 text-center">
     <button
       onClick={() => setShowAll(true)}

@@ -23,8 +23,8 @@ const AllServices = () => {
 
   return (
     <div className="px-4 py-8 mt-12">
-      <h2 className="md:text-4xl text-xl font-bold mb-6 text-gray-800">Services We Provide</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-12">
+      <h2 className="md:text-4xl text-xl font-bold mb-6 text-gray-800">Services We <span className='text-pink-600'>Provide</span></h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-14">
         {services.map(service => (
          <Link to={`/services/${service._id}`}
   key={service._id}

@@ -6,6 +6,7 @@ import Home from "../pages/Home/Home";
 import CreateServices from "../components/Services/CreateServices";
 import ServiceDetails from "../components/Services/ServiceDetails";
 import MyServices from "../pages/Provider/MyServices";
+import DashboardLayout from "../pages/DashboardLayout/DashboardLayout";
 
 
 
@@ -31,11 +32,24 @@ export const router = createBrowserRouter([
       },
 
       // will be provider route 
-      {
+
+     
+
+    ]},
+    {
+    path: '/dashboard',
+    element: <DashboardLayout />,
+    children: [
+      // provider
+       {
         path:'myServices',
         element:<MyServices/>
-      }
+      },
 
+      // admin
+      {
+        path:'pendingServices'
+      }
     ]}
 
 ]);
