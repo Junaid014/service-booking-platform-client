@@ -3,8 +3,8 @@ import { useState } from "react";
 import { Pencil, Trash2 } from "lucide-react";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import imageCompression from "browser-image-compression";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MyServices = () => {
   const axiosSecure = useAxiosSecure();

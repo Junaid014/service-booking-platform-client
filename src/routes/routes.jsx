@@ -5,8 +5,9 @@ import Root from "./Root";
 import Home from "../pages/Home/Home";
 import CreateServices from "../components/Services/CreateServices";
 import ServiceDetails from "../components/Services/ServiceDetails";
-import MyServices from "../pages/Provider/MyServices";
 import DashboardLayout from "../pages/DashboardLayout/DashboardLayout";
+import MyServices from "../pages/Dashboard/Provider/MyServices";
+import PendingServices from "../pages/Dashboard/Admin/PendingServices";
 
 
 
@@ -48,7 +49,8 @@ export const router = createBrowserRouter([
 
       // admin
       {
-        path:'pendingServices'
+        path:'pendingServices',
+        element:<PendingServices/>
       }
     ]}
 

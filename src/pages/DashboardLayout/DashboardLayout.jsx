@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, Outlet } from "react-router";
-import { FaHome, FaTools, FaCog, FaBars } from "react-icons/fa";
+import { FaHome, FaTools, FaCog, FaBars, FaHourglassHalf } from "react-icons/fa";
 
 const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,13 +8,13 @@ const DashboardLayout = () => {
   const handleClose = () => setIsOpen(false);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen ">
       {isOpen && (
-  <div
-    className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-    onClick={handleClose}
-  ></div>
-)}
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={handleClose}
+        ></div>
+      )}
 
       {/* Drawer */}
       <div
@@ -33,12 +33,22 @@ const DashboardLayout = () => {
           >
             <FaHome /> Home
           </Link>
+
           <Link
-            to="/dashboard/services"
+            to="/dashboard/pendingServices"
             className="flex items-center gap-2 hover:text-gray-300"
             onClick={handleClose}
           >
-            <FaTools /> Services
+            <FaHourglassHalf /> Pending Services
+          </Link>
+
+          {/* provider */}
+          <Link
+            to="/dashboard/myServices"
+            className="flex items-center gap-2 hover:text-gray-300"
+            onClick={handleClose}
+          >
+            <FaTools />My Services
           </Link>
           <Link
             to="/dashboard/settings"
