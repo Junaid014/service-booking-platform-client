@@ -7,10 +7,10 @@ import { Link } from 'react-router';
 const AllServices = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: services = [], isLoading } = useQuery({
-    queryKey: ['allServices'],
+   const { data: services = [], isLoading } = useQuery({
+    queryKey: ['approvedServices'], // changed queryKey
     queryFn: async () => {
-      const res = await axiosSecure.get('/services');
+      const res = await axiosSecure.get('/services/approved'); // changed endpoint
       return res.data;
     },
   });

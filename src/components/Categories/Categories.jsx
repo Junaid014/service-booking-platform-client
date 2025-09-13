@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Loading from "../../Shared/Loading";
+import { Link } from "react-router";
 
 
 const categories = [
@@ -42,13 +43,13 @@ export default function CategoryServices() {
   const axiosSecure = useAxiosSecure();
   const [selectedCategory, setSelectedCategory] = useState("Beauty & Wellness");
 
-  const {
+ const {
     data: services = [],
     isLoading,
   } = useQuery({
-    queryKey: ["services", selectedCategory],
+    queryKey: ["approvedServices", selectedCategory], // 🔹 changed
     queryFn: async () => {
-      const url = `/services?category=${encodeURIComponent(selectedCategory)}`;
+      const url = `/services/approved?category=${encodeURIComponent(selectedCategory)}`; // 🔹 changed
       const res = await axiosSecure.get(url);
       return res.data;
     },
@@ -62,7 +63,7 @@ export default function CategoryServices() {
   return (
     <div className="md:px-0 px-2 mt-20">
       
-      <div className="grid lg:grid-cols-7  md:grid-cols-5 grid-cols-3 gap-4 border-b pb-4">
+      <div className="grid lg:grid-cols-7  md:grid-cols-5 grid-cols-3 md:gap-4 gap-2 border-b pb-4">
         {categories.map((cat) => {
           const Icon = cat.icon;
           const isActive = selectedCategory === cat.name;
@@ -96,15 +97,15 @@ export default function CategoryServices() {
       <div className="flex flex-wrap gap-3 mt-6">
         {services.length > 0 ? (
           services.map((s) => (
-            <span
+            <Link 
+             to={`/services/${s._id}`}
               key={s._id}
               className="px-4 py-2 border rounded-full text-sm cursor-pointer bg-white hover:bg-gray-100"
             >
 
-        {/*------------------- will be as link soon---------------------- */}
-
+       
               {s.title}
-            </span>
+            </Link>
           ))
         ) : (
           <p>No services found.</p>
