@@ -114,7 +114,7 @@ const CreateServices = () => {
     }
   };
 
-  // when user clicks a suggestion: set form value and input UI
+ 
   const handleSelectSuggestion = (value) => {
     setValue("category", value, { shouldValidate: true, shouldDirty: true });
     setQuery(value);
@@ -122,14 +122,14 @@ const CreateServices = () => {
   };
 
   return (
-    <div className="max-w-[1360px] lg:px-0 px-3 md:px-3  mb-18  shadow-sm rounded  pt-14 pb-8 w-full  mx-auto">
+    <div className="  mb-18 rounded  pt-14 pb-8 w-full  mx-auto">
       <h2 className="text-xl md:text-3xl text-gray-700 font-semibold roboto text-center mb-6">
         Add Service
       </h2>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[1360px] lg:px-0 px-3 md:px-3 mx-auto"
       >
         {/* Title */}
         <div>
@@ -142,25 +142,24 @@ const CreateServices = () => {
         </div>
 
         {/* Category */}
-        {/* Replaced with searchable suggestions UI but kept styling consistent */}
+        
         <div ref={wrapperRef} className="relative">
           <label className="label font-medium">Category</label>
 
-          {/* Input is still registered with react-hook-form */}
+          
           <input
             {...register("category", { required: true })}
             className="input focus:outline-none focus:ring-0 focus:border-gray-600 w-full"
             placeholder="Category"
-            // keep it effectively uncontrolled for react-hook-form, but update UI via query
+            
             onFocus={(e) => {
               setShowSuggestions(true);
-              // sync query with current input value
+              
               setQuery(e.target.value || "");
             }}
             onInput={(e) => {
               setQuery(e.target.value);
-              // we do not call setValue on every keystroke because register keeps the value,
-              // but to be safe (and to ensure formValue sync), we call setValue here:
+             
               setValue("category", e.target.value, { shouldDirty: true });
             }}
           />
@@ -172,7 +171,7 @@ const CreateServices = () => {
                 <li
                   key={idx}
                   onMouseDown={(e) => {
-                    // use onMouseDown to avoid losing focus before click registers
+                    
                     e.preventDefault();
                     handleSelectSuggestion(sugg);
                   }}
