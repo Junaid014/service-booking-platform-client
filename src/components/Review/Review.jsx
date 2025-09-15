@@ -92,7 +92,7 @@ const ReviewCard = ({ review }) => {
 const Review = () => {
   return (
     <>
-    <div className=" mt-14 px-2 lg:px-12">
+    <div className=" mt-14  max-w-[1360px] lg:px-0 px-3 md:px-3  mx-auto ">
         <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
          SOME HAPPY FACES
         </h3>
@@ -100,7 +100,7 @@ const Review = () => {
          Our Happy <span className="text-pink-600">Customers</span> and <span className="text-pink-600">Providers</span>..
         </h2>
   </div>
-          <section className="py-12 lg:flex justify-between gap-6">
+          <section className="py-12 lg:flex justify-between max-w-[1360px] lg:px-0 px-3 md:px-3  mx-auto gap-6">
         
       {/* Left Column */}
       <div className="flex mb-0 md:mb-6 lg:w-1/4 lg:flex-col gap-1.5 md:gap-6">

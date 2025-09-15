@@ -10,11 +10,11 @@ const Navbar = () => {
               <>
                      <li>
                             <NavLink
-                                   to="/services"
+                                   to="/allServices"
                                    className={({ isActive }) =>
                                           isActive
-                                                 ? " underline font-semibold"
-                                                 : "text-[#1E293B]  hover:underline font-semibold"
+                                                 ? " underline font-medium"
+                                                 : "text-[#1E293B]  hover:underline "
                                    }
                             >
                                    Services
@@ -25,8 +25,8 @@ const Navbar = () => {
                                    to="/createService"
                                    className={({ isActive }) =>
                                           isActive
-                                                 ? " underline font-semibold"
-                                                 : "text-[#1E293B]  hover:underline font-semibold"
+                                                 ? " underline font-medium"
+                                                 : "text-[#1E293B]  hover:underline "
                                    }
                             >
                                    Create Service

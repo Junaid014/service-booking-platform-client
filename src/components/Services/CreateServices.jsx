@@ -122,7 +122,7 @@ const CreateServices = () => {
   };
 
   return (
-    <div className=" mb-18  shadow-sm rounded px-4 lg:px-2 pt-14 pb-8 w-full  mx-auto">
+    <div className="max-w-[1360px] lg:px-0 px-3 md:px-3  mb-18  shadow-sm rounded  pt-14 pb-8 w-full  mx-auto">
       <h2 className="text-xl md:text-3xl text-gray-700 font-semibold roboto text-center mb-6">
         Add Service
       </h2>

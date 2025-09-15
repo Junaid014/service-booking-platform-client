@@ -57,7 +57,7 @@ const ServiceDetails = () => {
   }
 
   return (
-    <div className="flex md:flex-row flex-col-reverse gap-4 mt-20 items-start">
+    <div className="flex md:flex-row flex-col-reverse max-w-[1360px] lg:px-0 px-3 md:px-3  mx-auto gap-4 mt-20 items-start">
       {/* Left Side */}
       <div className="md:w-2/5 w-full bg-gray-50 p-5 rounded-2xl border border-gray-200 shadow-sm">
         <h2 className="text-4xl font-bold mb-5 text-gray-900">

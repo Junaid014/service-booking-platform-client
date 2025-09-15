@@ -8,9 +8,9 @@ const AllServices = () => {
   const axiosSecure = useAxiosSecure();
 
    const { data: services = [], isLoading } = useQuery({
-    queryKey: ['approvedServices'], // changed queryKey
+    queryKey: ['approvedServices'], 
     queryFn: async () => {
-      const res = await axiosSecure.get('/services/approved'); // changed endpoint
+      const res = await axiosSecure.get('/services/approved'); 
       return res.data;
     },
   });
@@ -22,7 +22,7 @@ const AllServices = () => {
   }
 
   return (
-    <div className="px-4 py-8 mt-12">
+    <div className="max-w-[1360px] lg:px-0 px-3 md:px-3  mx-auto  py-8 mt-12">
       <h2 className="md:text-4xl text-xl font-bold mb-6 text-gray-800">Services We <span className='text-pink-600'>Provide</span></h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-14">
         {services.map(service => (

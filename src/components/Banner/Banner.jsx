@@ -27,7 +27,7 @@ const Banner = () => {
       const res = await axios.get(
         `http://localhost:3000/services/approved?location=${loc}`
       );
-      /
+      
       const uniqueLocations = [
         ...new Set(res.data.map((item) => item.location)),
       ];

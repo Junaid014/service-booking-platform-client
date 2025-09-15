@@ -8,6 +8,7 @@ import ServiceDetails from "../components/Services/ServiceDetails";
 import DashboardLayout from "../pages/DashboardLayout/DashboardLayout";
 import MyServices from "../pages/Dashboard/Provider/MyServices";
 import PendingServices from "../pages/Dashboard/Admin/PendingServices";
+import AllApprovedServices from "../components/Services/AllApprovedServices";
 
 
 
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
         path:'services/:id',
         Component: ServiceDetails
       },
+      {
+        path:'allServices',
+        Component:AllApprovedServices
+      }
 
       // will be provider route 
 

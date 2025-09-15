@@ -61,7 +61,7 @@ export default function CategoryServices() {
   if (isLoading) return <Loading/>;
 
   return (
-    <div className="md:px-0 px-2 mt-20">
+    <div className=" max-w-[1360px] lg:px-0 px-3 md:px-3  mx-auto  mt-20">
       
       <div className="grid lg:grid-cols-7  md:grid-cols-5 grid-cols-3 md:gap-4 gap-2 border-b pb-4">
         {categories.map((cat) => {
