@@ -1,7 +1,6 @@
 import {
   createBrowserRouter,
 } from "react-router";
-import Root from "./Root";
 import Home from "../pages/Home/Home";
 import CreateServices from "../components/Services/CreateServices";
 import ServiceDetails from "../components/Services/ServiceDetails";
@@ -9,6 +8,10 @@ import DashboardLayout from "../pages/DashboardLayout/DashboardLayout";
 import MyServices from "../pages/Dashboard/Provider/MyServices";
 import PendingServices from "../pages/Dashboard/Admin/PendingServices";
 import AllApprovedServices from "../components/Services/AllApprovedServices";
+import AuthLayout from "../layouts/AuthLayout";
+import SignUp from "../Authentication/SignUp";
+import Login from "../Authentication/Login";
+import Root from "../layouts/Root";
 
 
 
@@ -57,6 +60,22 @@ export const router = createBrowserRouter([
         path:'pendingServices',
         element:<PendingServices/>
       }
-    ]}
+    ]},
+
+
+    {
+    path: "/auth",
+    Component: AuthLayout,
+    children: [
+      {
+        path: "/auth/login",
+        Component: Login
+      },
+      {
+        path: "/auth/signUp",
+        Component: SignUp
+      },
+    ]
+  },
 
 ]);
