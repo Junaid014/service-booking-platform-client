@@ -1,10 +1,9 @@
 import { useState } from "react";
-import useAxiosSecure from "../hooks/useAxiosSecure";
 import toast, { Toaster } from "react-hot-toast";
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
-  const axiosSecure = useAxiosSecure();
-
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     phone: "",
     password: ""
@@ -32,13 +31,11 @@ const Login = () => {
     if (!isValidBDPhone(phone)) return toast.error("Invalid Bangladesh phone number!");
 
     try {
-      const res = await axiosSecure.post("/api/auth/login", { phone, password });
-
-      toast.success(res.data.message || "Login successful!");
+      const res = await login({ phone, password }); 
+      toast.success(res.message || "Login successful!");
       setFormData({ phone: "", password: "" });
     } catch (err) {
-      console.error(err);
-      toast.error(err.response?.data?.message || "Login failed!");
+      toast.error(err || "Login failed!");
     }
   };
 

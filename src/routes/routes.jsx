@@ -5,13 +5,13 @@ import Home from "../pages/Home/Home";
 import CreateServices from "../components/Services/CreateServices";
 import ServiceDetails from "../components/Services/ServiceDetails";
 import DashboardLayout from "../pages/DashboardLayout/DashboardLayout";
-import MyServices from "../pages/Dashboard/Provider/MyServices";
 import PendingServices from "../pages/Dashboard/Admin/PendingServices";
 import AllApprovedServices from "../components/Services/AllApprovedServices";
 import AuthLayout from "../layouts/AuthLayout";
 import SignUp from "../Authentication/SignUp";
 import Login from "../Authentication/Login";
 import Root from "../layouts/Root";
+import MyServices from "../pages/Dashboard/Seller/MyServices";
 
 
 
