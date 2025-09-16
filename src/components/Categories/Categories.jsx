@@ -47,9 +47,9 @@ export default function CategoryServices() {
     data: services = [],
     isLoading,
   } = useQuery({
-    queryKey: ["approvedServices", selectedCategory], // 🔹 changed
+    queryKey: ["approvedServices", selectedCategory], 
     queryFn: async () => {
-      const url = `/services/approved?category=${encodeURIComponent(selectedCategory)}`; // 🔹 changed
+      const url = `/services/approved?category=${encodeURIComponent(selectedCategory)}`; 
       const res = await axiosSecure.get(url);
       return res.data;
     },

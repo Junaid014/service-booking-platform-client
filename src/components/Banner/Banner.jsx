@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
-import axios from "axios";
+import React, { useState } from "react";
+import { FaSearch, FaMapMarkerAlt, FaRegSadTear } from "react-icons/fa";
+import { Link } from "react-router";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Banner = () => {
+  const axiosSecure = useAxiosSecure();
   const [location, setLocation] = useState("");
   const [service, setService] = useState("");
   const [locationSuggestions, setLocationSuggestions] = useState([]);
   const [serviceSuggestions, setServiceSuggestions] = useState([]);
 
-  
+
   const debounce = (func, delay) => {
     let timeoutId;
     return (...args) => {
@@ -24,10 +26,7 @@ const Banner = () => {
       return;
     }
     try {
-      const res = await axios.get(
-        `http://localhost:3000/services/approved?location=${loc}`
-      );
-      
+      const res = await axiosSecure.get(`/services/approved?location=${loc}`);
       const uniqueLocations = [
         ...new Set(res.data.map((item) => item.location)),
       ];
@@ -37,18 +36,19 @@ const Banner = () => {
     }
   };
 
-  
   const fetchServiceSuggestions = async (title) => {
     if (!title) {
       setServiceSuggestions([]);
       return;
     }
     try {
-      const res = await axios.get(
-        `http://localhost:3000/services/approved?title=${title}`
-      );
-      const uniqueTitles = [...new Set(res.data.map((item) => item.title))];
-      setServiceSuggestions(uniqueTitles);
+      let url = `/services/approved?title=${title}`;
+      if (location) {
+        url += `&location=${location}`;
+      }
+
+      const res = await axiosSecure.get(url);
+      setServiceSuggestions(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -70,7 +70,6 @@ const Banner = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     console.log({ location, service });
- 
   };
 
   return (
@@ -130,20 +129,37 @@ const Banner = () => {
               placeholder="Find your service e.g. AC, Car, Facial ..."
               className="bg-transparent outline-none w-full text-gray-700 placeholder-gray-400"
             />
-            {serviceSuggestions.length > 0 && (
-              <ul className="absolute top-full left-0 right-0 bg-white text-gray-700 shadow-md rounded-b-lg max-h-40 overflow-y-auto z-10">
-                {serviceSuggestions.map((title, i) => (
-                  <li
-                    key={i}
-                    className="p-2 hover:bg-gray-200 cursor-pointer"
-                    onClick={() => {
-                      setService(title);
-                      setServiceSuggestions([]);
-                    }}
-                  >
-                    {title}
+
+
+            {/* Service Suggestions with image + title */}
+            {service && (
+              <ul className="absolute top-full left-0 right-0 bg-white text-gray-700 shadow-md rounded-b-lg max-h-60 overflow-y-auto z-10">
+                {serviceSuggestions.length > 0 ? (
+                  serviceSuggestions.map((s) => (
+                    <Link
+                      key={s._id}
+                      to={`/services/${s._id}`}
+                      onClick={() => {
+                        setService(s.title);
+                        setServiceSuggestions([]);
+                      }}
+                    >
+                      <li className="flex items-center gap-3 p-2 hover:bg-gray-200 cursor-pointer">
+                        <img
+                          src={s.image}
+                          alt={s.title}
+                          className="w-10 h-10 rounded object-cover"
+                        />
+                        <span className="truncate">{s.title}</span>
+                      </li>
+                    </Link>
+                  ))
+                ) : (
+                  <li className="flex flex-col items-center justify-center gap-2 p-4 text-gray-500">
+                    <FaRegSadTear className="text-2xl text-pink-500" />
+                    <span className="italic text-sm">No services found</span>
                   </li>
-                ))}
+                )}
               </ul>
             )}
             <button
