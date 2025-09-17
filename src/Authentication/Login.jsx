@@ -1,9 +1,12 @@
 import { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
+import { useLocation, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { login } = useAuth();
+    const navigate = useNavigate();
+  const location =useLocation()
   const [formData, setFormData] = useState({
     phone: "",
     password: ""
@@ -32,7 +35,9 @@ const Login = () => {
 
     try {
       const res = await login({ phone, password }); 
+      
       toast.success(res.message || "Login successful!");
+      navigate(`${location.state ? location.state : "/"}`)
       setFormData({ phone: "", password: "" });
     } catch (err) {
       toast.error(err || "Login failed!");
@@ -41,7 +46,7 @@ const Login = () => {
 
   return (
     <div className="max-w-md mx-auto mt-16 p-8 bg-white shadow-xl rounded-xl">
-      <Toaster position="top-right" />
+     
       <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Welcome Back</h2>
       <form onSubmit={handleLogin} className="space-y-5">
         <input
@@ -64,7 +69,7 @@ const Login = () => {
         />
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition"
+          className="w-full cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition"
         >
           Login
         </button>

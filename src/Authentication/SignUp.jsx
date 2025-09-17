@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useAxiosSecure from "../hooks/useAxiosSecure";
-import toast, { Toaster } from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const axiosSecure = useAxiosSecure();
@@ -55,7 +55,7 @@ const Register = () => {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
-      <Toaster position="top-right" />
+     
       <h2 className="text-2xl font-bold mb-6 text-center">Create an Account</h2>
       <form onSubmit={handleRegister} className="space-y-4">
         {/* Username */}

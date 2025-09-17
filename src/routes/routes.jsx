@@ -13,6 +13,8 @@ import Login from "../Authentication/Login";
 import Root from "../layouts/Root";
 import MyServices from "../pages/Dashboard/Seller/MyServices";
 import MakeAdmin from "../pages/Dashboard/Admin/MakeAdmin";
+import PrivateRoute from "../Provider/PrivateRoute";
+import MyCart from "../pages/Dashboard/Customer/MyCart";
 
 
 
@@ -30,7 +32,7 @@ export const router = createBrowserRouter([
       },
       {
         path:'createService',
-        Component:CreateServices
+        element:<PrivateRoute><CreateServices/></PrivateRoute>
       },
       {
         path:'services/:id',
@@ -39,7 +41,12 @@ export const router = createBrowserRouter([
       {
         path:'allServices',
         Component:AllApprovedServices
-      }
+      },
+
+       {
+        path:'/myCart/:id',
+        element:<MyCart/>
+      },
 
       // will be provider route 
 
@@ -50,6 +57,8 @@ export const router = createBrowserRouter([
     path: '/dashboard',
     element: <DashboardLayout />,
     children: [
+      // customer
+     
       // provider
        {
         path:'myServices',

@@ -13,12 +13,8 @@ const MakeAdmin = () => {
        useEffect(() => {
               const fetchRecentUsers = async () => {
                      try {
-                            const res = await axiosSecure.get('/users');
-                            const sorted = res.data
-                                   .filter(user => user.last_log_in)
-                                   .sort((a, b) => new Date(b.last_log_in) - new Date(a.last_log_in))
-                                   .slice(0, 3);
-                            setRecentUsers(sorted);
+                            const res = await axiosSecure.get('/users/recent');
+                            setRecentUsers(res.data);
                      } catch (err) {
                             console.error(err);
                      }
@@ -65,34 +61,51 @@ const MakeAdmin = () => {
               }
        };
 
-       const renderUser = (user) => (
-              <div key={user._id} className="border border-gray-200 rounded-lg px-3 py-3 flex justify-between items-center shadow-sm">
-                     <div className="flex items-center gap-3">
-                            <img src={user.image} alt={user.name} className="w-10 h-10 rounded-full" />
-                            <div>
-                                   <p className="font-medium">{user.name}</p>
-                                   <p className="text-gray-600 text-sm">{user.email}</p>
-                                   <p className="text-gray-500 text-xs">Role: {user.role ? user.role : 'N/A'}</p>
-                            </div>
-                     </div>
-                     {user.role !== 'admin' ? (
-                            <button
-                                   onClick={() => updateRole(user._id, 'admin')}
-                                   className="bg-[#cd447d] cursor-pointer text-white px-3 py-1 rounded-md flex items-center gap-1"
-                            >
-                                   <FaUserShield /> Make Admin
-                            </button>
-                     ) : (
-                            <button
-                                   onClick={() => updateRole(user._id, 'customer')}
-                                   className="bg-red-500 cursor-pointer text-white px-3 py-1 rounded-md flex items-center gap-1"
-                            >
-                                   <FaUserMinus /> Remove Admin
-                            </button>
-                     )}
-              </div>
-       );
+       const renderUser = (user) => {
+              // Placeholder initials
+              const initials = user.name
+                     ? user.name
+                            .split(' ')
+                            .map(n => n[0])
+                            .join('')
+                            .slice(0, 2)
+                            .toUpperCase()
+                     : user.email.slice(0, 2).toUpperCase();
 
+              return (
+                     <div key={user._id} className="border border-gray-200 rounded-lg px-3 py-3 flex justify-between items-center shadow-sm">
+                            <div className="flex items-center gap-3">
+                                   {user.image ? (
+                                          <img src={user.image} alt={user.name} className="w-10 h-10 rounded-full" />
+                                   ) : (
+                                          <div className="w-10 h-10 rounded-full bg-pink-400 flex items-center justify-center text-white font-bold">
+                                                 {initials}
+                                          </div>
+                                   )}
+                                   <div>
+                                          <p className="font-medium">{user.name}</p>
+                                          <p className="text-gray-600 text-sm">{user.email}</p>
+                                          <p className="text-gray-500 text-xs">Role: {user.role ? user.role : 'N/A'}</p>
+                                   </div>
+                            </div>
+                            {user.role !== 'admin' ? (
+                                   <button
+                                          onClick={() => updateRole(user._id, 'admin')}
+                                          className="bg-[#cd447d] cursor-pointer text-white px-3 py-1 rounded-md flex items-center gap-1"
+                                   >
+                                          <FaUserShield /> Make Admin
+                                   </button>
+                            ) : (
+                                   <button
+                                          onClick={() => updateRole(user._id, 'customer')}
+                                          className="bg-red-500 cursor-pointer text-white px-3 py-1 rounded-md flex items-center gap-1"
+                                   >
+                                          <FaUserMinus /> Remove Admin
+                                   </button>
+                            )}
+                     </div>
+              );
+       };
 
        return (
               <div className="max-w-4xl mx-auto px-4 py-6">
