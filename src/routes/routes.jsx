@@ -12,6 +12,7 @@ import SignUp from "../Authentication/SignUp";
 import Login from "../Authentication/Login";
 import Root from "../layouts/Root";
 import MyServices from "../pages/Dashboard/Seller/MyServices";
+import MakeAdmin from "../pages/Dashboard/Admin/MakeAdmin";
 
 
 
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
       {
         path:'pendingServices',
         element:<PendingServices/>
+      },
+      {
+        path:'makeAdmin',
+        element:<MakeAdmin/>
       }
     ]},
 

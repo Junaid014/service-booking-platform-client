@@ -27,7 +27,7 @@ const PendingServices = () => {
 
   return (
     <div className="md:p-6">
-      <h2 className="text-xl font-semibold mb-4">Pending Services</h2>
+      <h2 className="text-2xl text-pink-600 font-semibold mb-4">Pending Services</h2>
       <div className="overflow-x-auto shadow rounded-lg">
         <table className="table w-full">
           <thead>

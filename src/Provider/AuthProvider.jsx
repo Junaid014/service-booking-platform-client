@@ -25,15 +25,20 @@ export const AuthProvider = ({ children }) => {
   };
 
 
-  const register = async (formData) => {
+const register = async (formData) => {
     try {
       const res = await axiosSecure.post("/api/auth/register", formData);
+
+      if (res.data.profile) {
+        setUser(res.data.profile); // ✅ user সেট করা হলো
+        localStorage.setItem("user", JSON.stringify(res.data.profile)); // ✅ localStorage এ রাখা হলো
+      }
+
       return res.data;
     } catch (err) {
       throw err.response?.data?.message || "Registration failed!";
     }
   };
-
  
   const logout = () => {
     setUser(null);

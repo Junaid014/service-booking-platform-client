@@ -80,11 +80,11 @@ const Banner = () => {
         className="w-full h-full object-cover object-center lg:object-top"
       />
       <div className="absolute inset-0 bg-black/50"></div>
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
-        <h1 className="text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg">
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-2 md:px-4">
+        <h1 className="text-xl md:text-5xl font-bold mb-4 drop-shadow-lg">
           Your Personal Assistant
         </h1>
-        <p className="text-lg md:text-xl mb-8 drop-shadow-md">
+        <p className="text-sm md:text-xl mb-8 drop-shadow-md">
           One-stop solution for your services. Order any service, anytime.
         </p>
 
@@ -121,7 +121,7 @@ const Banner = () => {
           </div>
 
           {/* Service Input */}
-          <div className="relative flex items-center bg-gray-100 px-4 py-3 rounded-xl w-full shadow-sm">
+          <div className="relative flex items-center bg-gray-100 md:px-4 py-3 rounded-xl w-full shadow-sm">
             <input
               type="text"
               value={service}

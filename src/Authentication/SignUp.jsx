@@ -1,10 +1,12 @@
 import { useState } from "react";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import toast, { Toaster } from "react-hot-toast";
+import { useLocation, useNavigate } from "react-router";
 
 const Register = () => {
   const axiosSecure = useAxiosSecure();
-
+  const navigate = useNavigate();
+  const location =useLocation()
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -43,6 +45,7 @@ const Register = () => {
     try {
       const res = await axiosSecure.post("/api/auth/register", formData);
       toast.success(res.data.message || "Registration successful!");
+      navigate(`${location.state ? location.state : "/"}`)
       setFormData({ username: "", password: "", email: "", phone: "", role: "customer" });
     } catch (err) {
       console.error(err);

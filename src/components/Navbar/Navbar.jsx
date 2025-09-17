@@ -6,11 +6,11 @@ import useAuth from "../../hooks/useAuth";
 import Loading from "../../Shared/Loading";
 const Navbar = () => {
        const [isOpen, setIsOpen] = useState(false);
-         const { user,loading, logout }=useAuth();
-         if(loading){
-              return <Loading/>
-         }
-         console.log(user);
+       const { user, loading, logout } = useAuth();
+       if (loading) {
+              return <Loading />
+       }
+       console.log(user);
 
        const links = (
               <>
@@ -38,6 +38,19 @@ const Navbar = () => {
                                    Create Service
                             </NavLink>
                      </li>
+                     <li>
+                            <NavLink
+                                   to="/dashboard"
+                                   className={({ isActive }) =>
+                                          isActive
+                                                 ? "underline font-medium"
+                                                 : "text-[#1E293B] hover:underline"
+                                   }
+                            >
+                                   Dashboard
+                            </NavLink>
+
+                     </li>
               </>
        );
 
@@ -59,24 +72,24 @@ const Navbar = () => {
 
                             {/* Right: Get Started */}
                             <div className="lg:flex items-center hidden">
-      {user ? (
-        // ✅ If user logged in → show Sign Out
-        <button
-          onClick={logout}
-          className="md:px-5 px-3 py-2 md:py-2.5 text-xs md:text-base cursor-pointer text-white bg-red-500 rounded-lg font-medium shadow-md hover:bg-red-600 transition-colors duration-300"
-        >
-          Sign Out
-        </button>
-      ) : (
-        // ❌ If no user → show Get Started
-       <Link
-                                          to="/auth/login"
-                                          className="md:px-5 px-3 py-2 md:py-2.5 text-xs md:text-base cursor-pointer text-[#cc3273] border border-[#cc3273] bg-white rounded-lg font-medium shadow-md  hover:text-white hover:bg-[#cc3273] transition-colors duration-300"
-                                   >
-                                          Get Started
-                                   </Link>
-      )}
-    </div>
+                                   {user ? (
+                                          
+                                          <button
+                                                 onClick={logout}
+                                                 className="md:px-5 px-3 py-2 md:py-2.5 text-xs md:text-base cursor-pointer text-white bg-red-500 rounded-lg font-medium shadow-md hover:bg-red-600 transition-colors duration-300"
+                                          >
+                                                 Sign Out
+                                          </button>
+                                   ) : (
+                                          
+                                          <Link
+                                                 to="/auth/login"
+                                                 className="md:px-5 px-3 py-2 md:py-2.5 text-xs md:text-base cursor-pointer text-[#cc3273] border border-[#cc3273] bg-white rounded-lg font-medium shadow-md  hover:text-white hover:bg-[#cc3273] transition-colors duration-300"
+                                          >
+                                                 Get Started
+                                          </Link>
+                                   )}
+                            </div>
 
                             {/* Mobile hamburger */}
                             <div className="lg:hidden">
@@ -118,7 +131,7 @@ const Navbar = () => {
                                    {links}
                                    <li>
                                           <Link
-                                                 to="/get-started"
+                                                 to="/auth/login"
                                                  className="md:px-5 px-3 py-2 md:py-2.5 text-xs md:text-base cursor-pointer text-[#cc3273] border border-[#cc3273] bg-white rounded-lg font-medium shadow-md  hover:text-white hover:bg-[#cc3273] transition-colors duration-300"
                                           >
                                                  Get Started
