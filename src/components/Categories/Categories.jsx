@@ -19,6 +19,7 @@ import {
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Loading from "../../Shared/Loading";
 import { Link } from "react-router";
+import { FaRegSadTear } from "react-icons/fa";
 
 
 const categories = [
@@ -100,7 +101,7 @@ export default function CategoryServices() {
             <Link 
              to={`/services/${s._id}`}
               key={s._id}
-              className="px-4 py-2 border rounded-full text-sm cursor-pointer bg-white hover:bg-gray-100"
+              className="px-4 py-2 border rounded-full text-sm cursor-pointer bg-gray-50 hover:bg-gray-300"
             >
 
        
@@ -108,7 +109,10 @@ export default function CategoryServices() {
             </Link>
           ))
         ) : (
-          <p>No services found.</p>
+         <p className="flex flex-col items-center justify-center text-gray-500 mt-10">
+  <FaRegSadTear className="text-5xl mb-3 text-gray-400" />
+  <span className="font-semibold text-lg">No services found.</span>
+</p>
         )}
       </div>
     </div>

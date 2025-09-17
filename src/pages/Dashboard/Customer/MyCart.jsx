@@ -60,7 +60,7 @@ const MyCart = () => {
           <span>Total Fee</span>
           <span>${subtotal}</span>
         </p>
-        <button className="w-full py-2 bg-[#cc3273] text-white rounded-lg font-medium shadow-md hover:bg-pink-700 transition-colors">
+        <button className="w-full py-2 cursor-pointer bg-[#cc3273] text-white rounded-lg font-medium shadow-md hover:bg-pink-700 transition-colors">
           Proceed to Payment
         </button>
       </div>

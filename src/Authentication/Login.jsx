@@ -1,12 +1,12 @@
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, Link } from "react-router";
 import { toast } from "react-toastify";
 
 const Login = () => {
   const { login } = useAuth();
-    const navigate = useNavigate();
-  const location =useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState({
     phone: "",
     password: ""
@@ -34,10 +34,10 @@ const Login = () => {
     if (!isValidBDPhone(phone)) return toast.error("Invalid Bangladesh phone number!");
 
     try {
-      const res = await login({ phone, password }); 
-      
+      const res = await login({ phone, password });
+
       toast.success(res.message || "Login successful!");
-      navigate(`${location.state ? location.state : "/"}`)
+      navigate(`${location.state ? location.state : "/"}`);
       setFormData({ phone: "", password: "" });
     } catch (err) {
       toast.error(err || "Login failed!");
@@ -45,9 +45,10 @@ const Login = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-16 p-8 bg-white shadow-xl rounded-xl">
-     
-      <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Welcome Back</h2>
+    <div className="max-w-md mx-auto mt-16 p-8 bg-white shadow-2xl rounded-2xl border border-gray-100">
+      <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+        Welcome Back
+      </h2>
       <form onSubmit={handleLogin} className="space-y-5">
         <input
           type="text"
@@ -69,11 +70,22 @@ const Login = () => {
         />
         <button
           type="submit"
-          className="w-full cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition"
+          className="w-full cursor-pointer bg-[#cc3273]  text-white font-semibold py-3 rounded-xl shadow-md transition"
         >
           Login
         </button>
       </form>
+
+      {/* Sign up link */}
+      <p className="text-center text-gray-600 mt-6">
+        New to this site?{" "}
+        <Link
+          to="/auth/signUp"
+          className="text-[#cc3273] hover:underline font-semibold"
+        >
+          Sign Up
+        </Link>
+      </p>
     </div>
   );
 };

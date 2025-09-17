@@ -1,24 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { Pencil, Trash2 } from "lucide-react";
+import { PackageOpen, Pencil, Trash2 } from "lucide-react";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import imageCompression from "browser-image-compression";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth"; 
 
 const MyServices = () => {
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth(); 
   const [selectedService, setSelectedService] = useState(null);
   const [uploading, setUploading] = useState(false); 
   const { register, handleSubmit, reset, setValue } = useForm();
 
   const { data: services = [], refetch } = useQuery({
-    queryKey: ["services"],
-    queryFn: async () => {
-      const res = await axiosSecure.get("/services");
-      return res.data;
-    },
-  });
+  queryKey: ["services", user?.email],
+  queryFn: async () => {
+    console.log("Fetching services for:", user?.email); // 🔥
+    const res = await axiosSecure.get(`/services?email=${user?.email}`);
+    console.log("Services received:", res.data); // 🔥
+    return res.data;
+  },
+  enabled: !!user?.email,
+});
+
 
 
   const handleDelete = async (id) => {
@@ -118,36 +124,59 @@ const MyServices = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-gray-700">
+      <h2 className="text-xl md:text-3xl font-bold text-center mb-6 text-pink-600">
         Manage Services
       </h2>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {services.map((service) => (
-          <div key={service._id} className="bg-white rounded-2xl shadow-md border p-4 flex flex-col">
-            <img src={service.image} alt={service.title} className="h-40 w-full object-cover rounded-xl" />
-            <h3 className="mt-3 text-lg font-semibold">{service.title}</h3>
-            <p className="text-sm text-gray-600 line-clamp-2">{service.description}</p>
-            <p className="mt-2 text-[#cc3273] font-bold">${service.price}/hr</p>
-            <p className="text-sm text-gray-500">{service.location}</p>
+     {services.length === 0 ? (
+        <div className="flex flex-col items-center justify-center bg-gradient-to-r from-pink-50 to-pink-100 border-2 border-dashed border-pink-300 rounded-2xl p-10 shadow-lg">
+          <PackageOpen className="w-16 h-16 text-pink-500 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-700">
+            You haven’t added any service yet
+          </h3>
+          <p className="text-sm text-gray-500 mt-1">
+            Start by adding your first service to showcase your skills!
+          </p>
+        </div>
+      ) : (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service) => (
+            <div
+              key={service._id}
+              className="bg-[#f0f0f0] rounded-2xl  border border-gray-200 shadow-2xl p-4 flex flex-col"
+            >
+              <img
+                src={service.image}
+                alt={service.title}
+                className="h-40 w-full object-cover rounded-xl"
+              />
+              <h3 className="mt-3 text-lg font-semibold">{service.title}</h3>
+              <p className="text-sm text-gray-600 line-clamp-2">
+                {service.description}
+              </p>
+              <p className="mt-2 text-[#cc3273] font-bold">
+                ${service.price}/hr
+              </p>
+              <p className="text-sm text-gray-500">{service.location}</p>
 
-            <div className="mt-4 flex justify-between">
-              <button
-                onClick={() => openUpdateModal(service)}
-                className="p-2 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-600 hover:text-white transition"
-              >
-                <Pencil size={18} />
-              </button>
-              <button
-                onClick={() => handleDelete(service._id)}
-                className="p-2 rounded-full bg-red-100 text-red-600 hover:bg-red-600 hover:text-white transition"
-              >
-                <Trash2 size={18} />
-              </button>
+              <div className="mt-4 flex justify-between">
+                <button
+                  onClick={() => openUpdateModal(service)}
+                  className="p-2 rounded-full cursor-pointer bg-blue-100 text-blue-600 hover:bg-blue-600 hover:text-white transition"
+                >
+                  <Pencil size={18} />
+                </button>
+                <button
+                  onClick={() => handleDelete(service._id)}
+                  className="p-2 rounded-full cursor-pointer bg-red-100 text-red-600 hover:bg-red-600 hover:text-white transition"
+                >
+                  <Trash2 size={18} />
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Update Modal */}
       <dialog id="updateModal" className="modal">

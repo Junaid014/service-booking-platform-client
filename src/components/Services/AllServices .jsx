@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { Link } from 'react-router';
+import Loading from '../../Shared/Loading';
 
 
 const AllServices = () => {
@@ -18,7 +19,7 @@ const AllServices = () => {
   
 
   if (isLoading) {
-    return <div className="text-center text-lg font-semibold py-10">Loading...</div>;
+    return <Loading/>;
   }
 
   return (
@@ -47,6 +48,10 @@ const AllServices = () => {
 
         ))}
       </div>
+      <button className='flex mx-auto mt-8 mb-8  className="md:px-5 px-5 py-2 md:py-2.5 text-xs md:text-base cursor-pointer text-[#cc3273] border border-[#cc3273] bg-white rounded-lg font-semibold shadow-md  hover:text-white hover:bg-[#cc3273] transition-colors duration-300">'>
+<Link  to="/allServices">Show All Services</Link>
+      </button>
+      
     </div>
   );
 };

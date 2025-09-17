@@ -54,41 +54,38 @@ const ServiceDetails = () => {
     ? categoryServices
     : categoryServices.slice(0, 2);
 
+  const handleAddToCart = () => {
+    if (!user) {
+      navigate("/auth/login", { state: location.pathname });
+      return;
+    }
 
- const handleAddToCart = () => {
-  if (!user) {
-    navigate("/auth/login", { state: location.pathname });
-    return;
-  }
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    // checking if this exact service already in cart
+    const existingIndex = cart.findIndex((item) => item._id === service._id);
 
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  // checking if this exact service already in cart
-  const existingIndex = cart.findIndex((item) => item._id === service._id);
+    if (existingIndex >= 0) {
+      cart[existingIndex] = {
+        _id: service._id,
+        title: service.title,
+        image: service.image,
+        price: Number(service.price),
+        quantity,
+      };
+    } else {
+      cart.push({
+        _id: service._id,
+        title: service.title,
+        image: service.image,
+        price: Number(service.price),
+        quantity,
+      });
+    }
 
-  if (existingIndex >= 0) {
-    
-    cart[existingIndex] = {
-      _id: service._id,
-      title: service.title,
-      image: service.image,
-      price: Number(service.price),
-      quantity, 
-    };
-  } else {
-    cart.push({
-      _id: service._id,
-      title: service.title,
-      image: service.image,
-      price: Number(service.price),
-      quantity,
-    });
-  }
+    localStorage.setItem("cart", JSON.stringify(cart));
 
-  localStorage.setItem("cart", JSON.stringify(cart));
-
-
-  navigate(`/myCart/${service._id}`);
-};
+    navigate(`/myCart/${service._id}`);
+  };
 
   if (serviceLoading || categoryLoading) {
     return (
@@ -180,17 +177,18 @@ const ServiceDetails = () => {
           <div className="flex items-center gap-3 mb-4">
             <button
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-              className="px-3 py-1 border rounded"
+              className="px-3 py-1 cursor-pointer border rounded"
             >
               -
             </button>
             <span>{quantity}</span>
             <button
               onClick={() => setQuantity((q) => q + 1)}
-              className="px-3 py-1 border rounded"
+              className="px-3 py-1 border cursor-pointer rounded"
             >
               +
             </button>
+            <p className="font-semibold text-sm text-gray-800">hour</p>
           </div>
 
           <button
@@ -201,7 +199,109 @@ const ServiceDetails = () => {
           </button>
         </div>
 
-    
+        {/* ✅ Below Section Added */}
+        <div className="grid md:grid-cols-2 gap-6 mt-8">
+          {/* Left side - Overview */}
+          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              Overview of {service?.title}
+            </h3>
+            <p className="text-gray-700 leading-relaxed">
+              {(() => {
+                switch (service?.category) {
+                  case "Beauty & Wellness":
+                    return "Our Beauty & Wellness services are designed to provide you with top-class grooming, spa, and self-care experiences at your convenience.";
+                  case "Cleaning":
+                    return "We ensure spotless cleaning services for homes, offices, and more. Hygiene and safety are always our top priority.";
+                  case "Creative & Media":
+                    return "From photography to graphic design, our Creative & Media experts deliver quality content tailored to your needs.";
+                  case "Education":
+                    return "Experienced tutors and educational support to guide you towards academic success.";
+                  case "Electrical":
+                    return "Professional electricians to solve wiring, installation, and repair tasks safely and efficiently.";
+                  case "Event & Lifestyle":
+                    return "Make every event memorable with our event planning, decoration, and lifestyle services.";
+                  case "Furniture Assembly":
+                    return "Quick and reliable furniture assembly services to save you time and hassle.";
+                  case "Gardening":
+                    return "Maintain a healthy, green, and beautiful garden with our expert gardening services.";
+                  case "General Mounting":
+                    return "Mount anything with ease — from shelves to appliances, we handle it professionally.";
+                  case "IT & Tech Services":
+                    return "Skilled IT experts to resolve hardware, software, and networking issues for home or business.";
+                  case "Painting":
+                    return "Brighten your space with our professional interior and exterior painting services.";
+                  case "Pest Control":
+                    return "Safe and effective pest control to keep your home or office pest-free.";
+                  case "Plumbing":
+                    return "From fixing leaks to new installations, our plumbers provide quick and reliable service.";
+                  case "TV Mounting":
+                    return "Secure and precise TV mounting for the best viewing experience.";
+                  case "Trending":
+                    return "Stay ahead with the latest trending services, tailored to your modern needs.";
+                  default:
+                    return "Our services are designed to ensure quality, safety, and customer satisfaction at every step.";
+                }
+              })()}
+            </p>
+          </div>
+
+          {/* Right side - Promise card */}
+          <div className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-xl p-6 shadow-sm">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Our Promise
+              </h3>
+              <ul className="space-y-1 text-sm text-gray-700">
+                <li className="flex items-center gap-2">
+                  <span className="text-green-600">✔</span> Verified
+                  Professionals
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-green-600">✔</span> Hassle Free Booking
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-green-600">✔</span> Transparent Pricing
+                </li>
+              </ul>
+            </div>
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/190/190411.png"
+              alt="quality assurance"
+              className="w-16 h-16 object-contain"
+            />
+          </div>
+        </div>
+
+        {/* Note to Customer */}
+        <div className="mt-8 bg-white border border-gray-200 rounded-xl p-6 shadow">
+          <h3 className="text-lg font-semibold text-gray-900 mb-3">
+            Note To Customer:
+          </h3>
+          <ul className="list-disc pl-5 space-y-2 text-gray-700 text-sm leading-relaxed">
+            <li>
+              If any delay happens by customer (30 minutes +), an extra charge
+              will be added with the service price.
+            </li>
+            <li>
+              After delivering the service, the customer must cross-check before
+              the service person leaves. No complaints will be accepted
+              afterward.
+            </li>
+            <li>Make sure to keep expensive belongings in a safe place.</li>
+            <li>
+              Customer must provide fresh water and electricity to support the
+              service person.
+            </li>
+            <li>
+              The service price might change if the working area is in very poor
+              condition.
+            </li>
+            <li>
+              If the work area increases, then extra charges will be applied.
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );
