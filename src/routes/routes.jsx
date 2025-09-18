@@ -15,6 +15,7 @@ import MyServices from "../pages/Dashboard/Seller/MyServices";
 import MakeAdmin from "../pages/Dashboard/Admin/MakeAdmin";
 import PrivateRoute from "../Provider/PrivateRoute";
 import MyCart from "../pages/Dashboard/Customer/MyCart";
+import Payment from "../components/Payment/Payment";
 
 
 
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
       {
         path:'allServices',
         Component:AllApprovedServices
+      },
+      {
+        path:'payment/:id',
+        Component:Payment
       },
 
        {

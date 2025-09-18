@@ -4,6 +4,7 @@ import WhyChooseUs from '../../components/WhyChooseUs/WhyChooseUs';
 import AllServices from '../../components/Services/AllServices ';
 import CategoryServices from '../../components/Categories/Categories';
 import Banner from '../../components/Banner/Banner';
+import Footer from '../../components/Footer/Footer';
 
 const Home = () => {
        return (
@@ -13,6 +14,7 @@ const Home = () => {
                      <AllServices/>
                      <WhyChooseUs/>
                      <Review/>
+                     
                      
               </div>
        );

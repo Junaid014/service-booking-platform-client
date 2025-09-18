@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 const MyCart = () => {
   const { id } = useParams(); 
   const [cart, setCart] = useState([]);
+  const navigate =useNavigate()
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("cart")) || [];
@@ -18,7 +19,7 @@ const MyCart = () => {
   );
 
   return (
-    <div className="max-w-[1360px] mx-auto px-3 md:px-6 mt-20 flex flex-col md:flex-row gap-6">
+    <div className="max-w-[1360px] mx-auto px-3 md:px-6 mt-20 mb-8 flex flex-col md:flex-row gap-6">
       {/* Left side - Cart Items */}
       <div className="flex-1 bg-white rounded-xl shadow p-6">
         <h2 className="text-xl font-semibold mb-4">My Cart</h2>
@@ -49,21 +50,23 @@ const MyCart = () => {
         )}
       </div>
 
-      {/* Right side - Order Summary */}
-      <div className="w-full md:w-1/3 bg-gray-50 rounded-xl shadow p-6 h-fit">
-        <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
-        <p className="flex justify-between text-sm mb-2">
-          <span>Subtotal ({cart.length} items)</span>
-          <span>${subtotal}</span>
-        </p>
-        <p className="flex justify-between text-sm mb-4">
-          <span>Total Fee</span>
-          <span>${subtotal}</span>
-        </p>
-        <button className="w-full py-2 cursor-pointer bg-[#cc3273] text-white rounded-lg font-medium shadow-md hover:bg-pink-700 transition-colors">
-          Proceed to Payment
-        </button>
-      </div>
+     <div className="w-full md:w-1/3 bg-gray-50 rounded-xl shadow p-6 h-fit">
+  <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
+  <p className="flex justify-between text-sm mb-2">
+    <span>Subtotal ({cart.length} items)</span>
+    <span>${subtotal}</span>
+  </p>
+  <p className="flex justify-between text-sm mb-4">
+    <span>Total Fee</span>
+    <span>${subtotal}</span>
+  </p>
+  <button
+    onClick={() => navigate(`/payment/${id}`)} 
+    className="w-full py-2 cursor-pointer bg-[#cc3273] text-white rounded-lg font-medium shadow-md hover:bg-pink-700 transition-colors"
+  >
+    Proceed to Payment
+  </button>
+</div>
     </div>
   );
 };
