@@ -199,7 +199,7 @@ const ServiceDetails = () => {
           </button>
         </div>
 
-        {/* ✅ Below Section Added */}
+
         <div className="grid md:grid-cols-2 gap-6 mt-8">
           {/* Left side - Overview */}
           <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">

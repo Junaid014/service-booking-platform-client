@@ -1,11 +1,11 @@
-import {  CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router";
 
-const PaymentForm = ({ service }) => {
+const PaymentForm = ({ service, subtotal }) => {
   const stripe = useStripe();
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
@@ -21,10 +21,14 @@ const PaymentForm = ({ service }) => {
     setProcessing(true);
 
     try {
-      //  Payment Intent 
+      console.log("💰 Sending price to backend:", subtotal); 
+
+    
       const { data } = await axiosSecure.post("/create-payment-intent", {
-        price: service.price,
+        price: subtotal, 
       });
+
+      console.log("🧾 Client secret from backend:", data);
 
       const result = await stripe.confirmCardPayment(data.clientSecret, {
         payment_method: {
@@ -35,25 +39,28 @@ const PaymentForm = ({ service }) => {
         },
       });
 
+      console.log("✅ Payment result:", result);
+
       if (result.error) {
         Swal.fire("Error", result.error.message, "error");
       } else if (result.paymentIntent.status === "succeeded") {
-        //  Payment save backend
         const paymentInfo = {
           serviceId: service._id,
           serviceTitle: service.title,
           buyerEmail: user.email,
-          price: service.price,
+          providerEmail: service.userEmail, 
+          price: subtotal,
           transactionId: result.paymentIntent.id,
           date: new Date(),
         };
+
+        console.log("💾 Saving payment info:", paymentInfo);
 
         await axiosSecure.post("/payments", paymentInfo);
 
         setPaid(true);
         Swal.fire("Success", "Payment completed successfully!", "success");
-       //  will be added route 
-        navigate("/"); 
+        navigate("/");
       }
     } catch (error) {
       console.error(error);
@@ -71,11 +78,10 @@ const PaymentForm = ({ service }) => {
       <h2 className="text-xl font-semibold mb-2 text-center text-[#cc3273]">
         Payment for {service.title}
       </h2>
-      <h3 className="text-lg font-medium mb-4 text-center">
-        Pay ৳{service.price}
+      <h3 className="font-semibold roboto mb-4 text-center">
+        Pay {subtotal} $
       </h3>
 
-      {/* Stripe Card Input */}
       <CardElement
         options={{
           style: {
@@ -94,10 +100,9 @@ const PaymentForm = ({ service }) => {
         className="p-3 border border-gray-200 rounded mb-4"
       />
 
-      {/* Submit Button */}
       <button
         type="submit"
-        className="w-full bg-[#cc3273] hover:bg-pink-700 text-white py-2 rounded font-medium"
+        className="w-full cursor-pointer bg-[#cc3273] hover:bg-pink-700 text-white py-2 rounded font-medium"
         disabled={!stripe || processing || paid}
       >
         {processing ? "Processing..." : paid ? "Paid" : "Pay Now"}
@@ -105,5 +110,6 @@ const PaymentForm = ({ service }) => {
     </form>
   );
 };
+
 
 export default PaymentForm;

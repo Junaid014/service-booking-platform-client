@@ -60,12 +60,12 @@ const MyCart = () => {
     <span>Total Fee</span>
     <span>${subtotal}</span>
   </p>
-  <button
-    onClick={() => navigate(`/payment/${id}`)} 
-    className="w-full py-2 cursor-pointer bg-[#cc3273] text-white rounded-lg font-medium shadow-md hover:bg-pink-700 transition-colors"
-  >
-    Proceed to Payment
-  </button>
+ <button
+  onClick={() => navigate(`/payment/${id}`, { state: { subtotal } })} 
+  className="w-full py-2 cursor-pointer bg-[#cc3273] text-white rounded-lg font-medium shadow-md hover:bg-pink-700 transition-colors"
+>
+  Proceed to Payment
+</button>
 </div>
     </div>
   );
