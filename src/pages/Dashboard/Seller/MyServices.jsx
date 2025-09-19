@@ -123,8 +123,8 @@ const MyServices = () => {
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-xl md:text-3xl font-bold text-center mb-6 text-pink-600">
+    <div className="md:*:p-6">
+      <h2 className=" md:text-3xl text-lg font-bold md:text-center mb-6 text-pink-600">
         Manage Services
       </h2>
 

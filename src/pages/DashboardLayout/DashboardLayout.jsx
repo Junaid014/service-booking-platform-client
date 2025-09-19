@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, Outlet } from "react-router";
-import { FaHome, FaTools, FaCog, FaBars, FaHourglassHalf, FaUserShield } from "react-icons/fa";
+import { FaHome, FaTools, FaCog, FaBars, FaHourglassHalf, FaUserShield, FaMoneyCheckAlt, FaDollarSign } from "react-icons/fa";
 
 const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,6 +50,15 @@ const DashboardLayout = () => {
             <FaUserShield /> Make Admin
           </Link>
 
+          {/* Customer */}
+          <Link
+            to="/dashboard/paymentHistory"
+            className="flex items-center gap-2 hover:text-gray-300"
+            onClick={handleClose}
+          >
+            <FaMoneyCheckAlt /> Payment History
+          </Link>
+
           {/* provider */}
           <Link
             to="/dashboard/myServices"
@@ -58,6 +67,14 @@ const DashboardLayout = () => {
           >
             <FaTools />My Services
           </Link>
+
+          <Link
+  to="/dashboard/providerEarnings"
+  className="flex items-center gap-2 hover:text-gray-300"
+  onClick={handleClose}
+>
+  <FaDollarSign /> Earnings
+</Link>
 
 
         </nav>

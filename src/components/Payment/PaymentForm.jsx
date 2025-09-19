@@ -60,7 +60,7 @@ const PaymentForm = ({ service, subtotal }) => {
 
         setPaid(true);
         Swal.fire("Success", "Payment completed successfully!", "success");
-        navigate("/");
+        navigate("/dashboard/paymentHistory");
       }
     } catch (error) {
       console.error(error);

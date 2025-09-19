@@ -16,6 +16,8 @@ import MakeAdmin from "../pages/Dashboard/Admin/MakeAdmin";
 import PrivateRoute from "../Provider/PrivateRoute";
 import MyCart from "../pages/Dashboard/Customer/MyCart";
 import Payment from "../components/Payment/Payment";
+import PaymentHistory from "../pages/Dashboard/Customer/PaymentHistory";
+import ProviderEarnings from "../pages/Dashboard/Seller/ProviderEarnings ";
 
 
 
@@ -63,11 +65,19 @@ export const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       // customer
+      {
+        path:'paymentHistory',
+        element: <PaymentHistory/>
+      },
      
       // provider
        {
         path:'myServices',
         element:<MyServices/>
+      },
+      {
+        path:'providerEarnings',
+        element:<ProviderEarnings/>
       },
 
       // admin
