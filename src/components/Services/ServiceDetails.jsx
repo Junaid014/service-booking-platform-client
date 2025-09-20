@@ -50,6 +50,19 @@ const ServiceDetails = () => {
     refetchOnWindowFocus: false,
   });
 
+    // reviews
+  const {
+    data: reviews = [],
+    isLoading: reviewsLoading,
+  } = useQuery({
+    queryKey: ["reviews", id],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/reviews/${id}`);
+      return res.data;
+    },
+  });
+
+
   const visibleServices = showAll
     ? categoryServices
     : categoryServices.slice(0, 2);
@@ -96,10 +109,12 @@ const ServiceDetails = () => {
   }
 
   return (
-    <div className="flex md:flex-row flex-col-reverse max-w-[1360px] lg:px-0 px-3 md:px-3  mx-auto gap-4 mt-20 items-start">
+    <div className="flex md:flex-row flex-col-reverse max-w-[1360px] lg:px-0 px-3 md:px-3  mx-auto gap-4 mt-8 md:mt-20 items-start">
       {/* Left Side */}
-      <div className="md:w-2/5 w-full bg-gray-50 p-5 rounded-2xl border border-gray-200 shadow-sm">
-        <h2 className="text-4xl font-bold mb-5 text-gray-900">
+      <div className="md:w-2/5 w-full">
+
+<div className=" bg-gray-50 md:p-5 p-2 rounded-2xl border border-gray-200 shadow-sm">
+        <h2 className="md:text-3xl text-xl mt-4 font-bold mb-5 text-gray-900">
           {service?.category}
         </h2>
 
@@ -108,7 +123,7 @@ const ServiceDetails = () => {
             <Link
               to={`/services/${item._id}`}
               key={item._id}
-              className="flex items-center gap-4 bg-white p-4 rounded-2xl border border-gray-100 hover:border-indigo-200 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
+              className="flex items-center gap-4 bg-white md:p-4 p-1.5 rounded-2xl border border-gray-100 hover:border-indigo-200 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
             >
               <img
                 src={item.image}
@@ -142,9 +157,67 @@ const ServiceDetails = () => {
         )}
       </div>
 
+      <div className="mt-8">
+  <h3 className="md:text-3xl text-lg font-bold text-gray-900 mb-4">Customer Reviews</h3>
+
+  {reviewsLoading ? (
+    <p className="text-gray-500 text-sm">Loading reviews...</p>
+  ) : reviews.length === 0 ? (
+    <p className="text-gray-500 text-sm">No reviews yet.</p>
+  ) : (
+    <div className="space-y-4">
+      {reviews.map((review) => (
+        <div
+          key={review._id}
+          className="flex items-start gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm"
+        >
+          {/* Avatar */}
+          <img
+            src="https://res.cloudinary.com/urbanclap/image/upload/t_high_res_profile,q_auto:low,f_auto/w_48,dpr_2,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/supply/customer-app-supply/1649054989501-7edc6d.jpeg"
+            alt="user"
+            className="w-12 h-12 rounded-full border"
+          />
+
+          {/* Review Content */}
+          <div className="flex-1">
+            <div className="flex items-center justify-between">
+              <h4 className="font-semibold text-gray-800">
+                {review.userName || "Anonymous"}
+              </h4>
+              {/* ⭐ Rating */}
+              <div className="flex">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <span
+                    key={star}
+                    className={`text-sm ${
+                      star <= review.rating ? "text-yellow-400" : "text-gray-300"
+                    }`}
+                  >
+                    ★
+                  </span>
+                ))}
+              </div>
+            </div>
+            <p className="text-gray-600 text-sm mt-1 leading-relaxed">
+              {review.comment}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
+
+      </div>
+      
+
+
+
+
       {/* Right side */}
       <div className="md:w-3/5">
-        <div className="bg-white p-6 rounded-xl shadow mb-6">
+        <div className="bg-white md:p-4 rounded-xl shadow mb-6">
           {/* Image */}
           <img
             src={service?.image}
@@ -153,28 +226,28 @@ const ServiceDetails = () => {
           />
 
           {/* Title */}
-          <h2 className="text-2xl font-bold mb-4 text-gray-900">
+          <h2 className="text-2xl md:px-0 px-3 font-bold mb-4 text-gray-900">
             {service?.title}
           </h2>
 
           {/* Location */}
-          <p className="text-sm text-gray-500 mb-3">
+          <p className="text-sm md:px-0 px-3  text-gray-500 mb-3">
             <span className="font-semibold text-gray-700">Location:</span>{" "}
             {service?.location || "Not specified"}
           </p>
 
           {/* Description */}
-          <p className="text-gray-700 mb-4 leading-relaxed">
+          <p className="text-gray-700 md:px-0 px-3  mb-4 leading-relaxed">
             {service?.description}
           </p>
 
           {/* Price */}
-          <p className="text-lg font-semibold text-[#cc3273] mb-4">
+          <p className="text-lg md:px-0 px-3  font-semibold text-[#cc3273] mb-4">
             Price: ${service?.price}
           </p>
 
           {/* 🟢 Quantity Selector + Add to Cart */}
-          <div className="flex items-center gap-3 mb-4">
+          <div className="flex md:px-0 px-3  items-center gap-3 mb-4">
             <button
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
               className="px-3 py-1 cursor-pointer border rounded"
@@ -184,7 +257,7 @@ const ServiceDetails = () => {
             <span>{quantity}</span>
             <button
               onClick={() => setQuantity((q) => q + 1)}
-              className="px-3 py-1 border cursor-pointer rounded"
+              className="px-3  py-1 border cursor-pointer rounded"
             >
               +
             </button>
@@ -193,7 +266,7 @@ const ServiceDetails = () => {
 
           <button
             onClick={handleAddToCart}
-            className="md:px-5 px-3 py-2 md:py-2.5 text-xs md:text-base cursor-pointer text-[#cc3273] border border-[#cc3273] bg-white rounded-lg font-medium shadow-md hover:text-white hover:bg-[#cc3273] transition-colors duration-300"
+            className="md:px-5 px-3 mx-3 md:mx-0 mb-4 py-2 md:py-2.5 text-xs md:text-base cursor-pointer text-[#cc3273] border border-[#cc3273] bg-white rounded-lg font-medium shadow-md hover:text-white hover:bg-[#cc3273] transition-colors duration-300"
           >
             Add to Cart
           </button>
@@ -203,7 +276,7 @@ const ServiceDetails = () => {
         <div className="grid md:grid-cols-2 gap-6 mt-8">
           {/* Left side - Overview */}
           <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">
+            <h3 className="md:text-xl text-lg font-semibold text-gray-900 mb-3">
               Overview of {service?.title}
             </h3>
             <p className="text-gray-700 leading-relaxed">
