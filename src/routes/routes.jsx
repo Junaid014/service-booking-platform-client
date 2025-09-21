@@ -18,6 +18,7 @@ import MyCart from "../pages/Dashboard/Customer/MyCart";
 import Payment from "../components/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/Customer/PaymentHistory";
 import ProviderEarnings from "../pages/Dashboard/Seller/ProviderEarnings ";
+import Forbidden from "../Forbidden/Forbidden";
 
 
 
@@ -54,10 +55,13 @@ export const router = createBrowserRouter([
         path:'/myCart/:id',
         element:<MyCart/>
       },
+      {
+        path:'forbidden',
+        element:Forbidden
+      }
 
       // will be provider route 
 
-     
 
     ]},
     {

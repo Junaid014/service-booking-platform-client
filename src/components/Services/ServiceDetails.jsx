@@ -156,57 +156,77 @@ const ServiceDetails = () => {
           </div>
         )}
       </div>
-
-      <div className="mt-8">
-  <h3 className="md:text-3xl text-lg font-bold text-gray-900 mb-4">Customer Reviews</h3>
+<div className="mt-8">
+  <h3 className="md:text-3xl text-lg font-bold text-gray-900 mb-4">
+    Customer Reviews
+  </h3>
 
   {reviewsLoading ? (
     <p className="text-gray-500 text-sm">Loading reviews...</p>
   ) : reviews.length === 0 ? (
     <p className="text-gray-500 text-sm">No reviews yet.</p>
   ) : (
-    <div className="space-y-4">
-      {reviews.map((review) => (
-        <div
-          key={review._id}
-          className="flex items-start gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm"
-        >
-          {/* Avatar */}
-          <img
-            src="https://res.cloudinary.com/urbanclap/image/upload/t_high_res_profile,q_auto:low,f_auto/w_48,dpr_2,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/supply/customer-app-supply/1649054989501-7edc6d.jpeg"
-            alt="user"
-            className="w-12 h-12 rounded-full border"
-          />
+    <>
+      <div className="space-y-4">
+        {reviews
+          .slice(0, showAll ? reviews.length : 4)
+          .map((review) => (
+            <div
+              key={review._id}
+              className="flex items-start gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm"
+            >
+              {/* Avatar */}
+              <img
+                src="https://res.cloudinary.com/urbanclap/image/upload/t_high_res_profile,q_auto:low,f_auto/w_48,dpr_2,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/supply/customer-app-supply/1649054989501-7edc6d.jpeg"
+                alt="user"
+                className="w-12 h-12 rounded-full border"
+              />
 
-          {/* Review Content */}
-          <div className="flex-1">
-            <div className="flex items-center justify-between">
-              <h4 className="font-semibold text-gray-800">
-                {review.userName || "Anonymous"}
-              </h4>
-              {/* ⭐ Rating */}
-              <div className="flex">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <span
-                    key={star}
-                    className={`text-sm ${
-                      star <= review.rating ? "text-yellow-400" : "text-gray-300"
-                    }`}
-                  >
-                    ★
-                  </span>
-                ))}
+              {/* Review Content */}
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <h4 className="font-semibold text-gray-800">
+                    {review.userName || "Anonymous"}
+                  </h4>
+                  {/* ⭐ Rating */}
+                  <div className="flex">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <span
+                        key={star}
+                        className={`text-sm ${
+                          star <= review.rating
+                            ? "text-yellow-400"
+                            : "text-gray-300"
+                        }`}
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-gray-600 text-sm mt-1 leading-relaxed">
+                  {review.comment}
+                </p>
               </div>
             </div>
-            <p className="text-gray-600 text-sm mt-1 leading-relaxed">
-              {review.comment}
-            </p>
-          </div>
+          ))}
+      </div>
+
+      {/* Show More / Show Less Button */}
+      {reviews.length > 4 && (
+        <div className="mt-4 text-center">
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="md:px-5 px-3 py-2 md:py-2.5 text-xs md:text-base cursor-pointer text-[#cc3273] border border-[#cc3273] bg-white rounded-lg font-medium shadow-md hover:text-white hover:bg-[#cc3273] transition-colors duration-300"
+          >
+            {showAll ? "Show Less" : "Show More"}
+          </button>
         </div>
-      ))}
-    </div>
+      )}
+    </>
   )}
 </div>
+
 
 
       </div>

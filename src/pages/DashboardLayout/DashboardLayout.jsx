@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { Link, Outlet } from "react-router";
+import { Link, NavLink, Outlet } from "react-router";
 import { FaHome, FaTools, FaCog, FaBars, FaHourglassHalf, FaUserShield, FaMoneyCheckAlt, FaDollarSign } from "react-icons/fa";
+import useUserRole from "../../hooks/useUserRole";
 
 const DashboardLayout = () => {
+
+  const { role, roleLoading } = useUserRole();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => setIsOpen(false);
@@ -33,48 +36,61 @@ const DashboardLayout = () => {
           >
             <FaHome /> Home
           </Link>
-          {/* -------Admin------- */}
-          <Link
-            to="/dashboard/pendingServices"
-            className="flex items-center gap-2 hover:text-gray-300"
-            onClick={handleClose}
-          >
-            <FaHourglassHalf /> Pending Services
-          </Link>
+          
 
-          <Link
-            to="/dashboard/makeAdmin"
-            className="flex items-center gap-2 hover:text-gray-300"
-            onClick={handleClose}
-          >
-            <FaUserShield /> Make Admin
-          </Link>
+      {/* -------Admin------- */}
+{!roleLoading && role === "admin" && (
+  <>
+    <NavLink
+      to="/dashboard/pendingServices"
+      className="flex items-center gap-2 hover:text-gray-300"
+      onClick={handleClose}
+    >
+      <FaHourglassHalf /> Pending Services
+    </NavLink>
 
-          {/* Customer */}
-          <Link
-            to="/dashboard/paymentHistory"
-            className="flex items-center gap-2 hover:text-gray-300"
-            onClick={handleClose}
-          >
-            <FaMoneyCheckAlt /> Payment History
-          </Link>
+    <NavLink
+      to="/dashboard/makeAdmin"
+      className="flex items-center gap-2 hover:text-gray-300"
+      onClick={handleClose}
+    >
+      <FaUserShield /> Make Admin
+    </NavLink>
+  </>
+)}
 
-          {/* provider */}
-          <Link
-            to="/dashboard/myServices"
-            className="flex items-center gap-2 hover:text-gray-300"
-            onClick={handleClose}
-          >
-            <FaTools />My Services
-          </Link>
+{/* -------Customer------- */}
+{!roleLoading && role === "customer" && (
+  <NavLink
+    to="/dashboard/paymentHistory"
+    className="flex items-center gap-2 hover:text-gray-300"
+    onClick={handleClose}
+  >
+    <FaMoneyCheckAlt /> Payment History
+  </NavLink>
+)}
 
-          <Link
-  to="/dashboard/providerEarnings"
-  className="flex items-center gap-2 hover:text-gray-300"
-  onClick={handleClose}
->
-  <FaDollarSign /> Earnings
-</Link>
+{/* -------Provider------- */}
+{!roleLoading && role === "provider" && (
+  <>
+    <NavLink
+      to="/dashboard/myServices"
+      className="flex items-center gap-2 hover:text-gray-300"
+      onClick={handleClose}
+    >
+      <FaTools /> My Services
+    </NavLink>
+
+    <NavLink
+      to="/dashboard/providerEarnings"
+      className="flex items-center gap-2 hover:text-gray-300"
+      onClick={handleClose}
+    >
+      <FaDollarSign /> Earnings
+    </NavLink>
+  </>
+)}
+
 
 
         </nav>
