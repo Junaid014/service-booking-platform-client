@@ -19,6 +19,7 @@ import Payment from "../components/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/Customer/PaymentHistory";
 import ProviderEarnings from "../pages/Dashboard/Seller/ProviderEarnings ";
 import Forbidden from "../Forbidden/Forbidden";
+import MyProfile from "../pages/Dashboard/Customer/MyProfile";
 
 
 
@@ -72,6 +73,10 @@ export const router = createBrowserRouter([
       {
         path:'paymentHistory',
         element: <PaymentHistory/>
+      },
+      {
+        path:'myProfile',
+        Component:MyProfile
       },
      
       // provider

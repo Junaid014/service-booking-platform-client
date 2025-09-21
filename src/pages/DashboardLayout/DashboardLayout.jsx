@@ -1,14 +1,28 @@
-import { useState } from "react";
-import { Link, NavLink, Outlet } from "react-router";
+import { useState, useEffect } from "react";
+import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router";
 import { FaHome, FaTools, FaCog, FaBars, FaHourglassHalf, FaUserShield, FaMoneyCheckAlt, FaDollarSign } from "react-icons/fa";
 import useUserRole from "../../hooks/useUserRole";
 
 const DashboardLayout = () => {
-
   const { role, roleLoading } = useUserRole();
   const [isOpen, setIsOpen] = useState(false);
-
   const handleClose = () => setIsOpen(false);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // redirect by role
+  useEffect(() => {
+    if (!roleLoading && location.pathname === "/dashboard") {
+      if (role === "customer") {
+        navigate("/dashboard/paymentHistory", { replace: true });
+      } else if (role === "provider") {
+        navigate("/dashboard/providerEarnings", { replace: true });
+      } else if (role === "admin") {
+        navigate("/dashboard/pendingServices", { replace: true });
+      }
+    }
+  }, [role, roleLoading, location.pathname, navigate]);
 
   return (
     <div className="flex h-screen ">
@@ -36,63 +50,59 @@ const DashboardLayout = () => {
           >
             <FaHome /> Home
           </Link>
-          
 
-      {/* -------Admin------- */}
-{!roleLoading && role === "admin" && (
-  <>
-    <NavLink
-      to="/dashboard/pendingServices"
-      className="flex items-center gap-2 hover:text-gray-300"
-      onClick={handleClose}
-    >
-      <FaHourglassHalf /> Pending Services
-    </NavLink>
+          {/* -------Admin------- */}
+          {!roleLoading && role === "admin" && (
+            <>
+              <NavLink
+                to="/dashboard/pendingServices"
+                className="flex items-center gap-2 hover:text-gray-300"
+                onClick={handleClose}
+              >
+                <FaHourglassHalf /> Pending Services
+              </NavLink>
 
-    <NavLink
-      to="/dashboard/makeAdmin"
-      className="flex items-center gap-2 hover:text-gray-300"
-      onClick={handleClose}
-    >
-      <FaUserShield /> Make Admin
-    </NavLink>
-  </>
-)}
+              <NavLink
+                to="/dashboard/makeAdmin"
+                className="flex items-center gap-2 hover:text-gray-300"
+                onClick={handleClose}
+              >
+                <FaUserShield /> Make Admin
+              </NavLink>
+            </>
+          )}
 
-{/* -------Customer------- */}
-{!roleLoading && role === "customer" && (
-  <NavLink
-    to="/dashboard/paymentHistory"
-    className="flex items-center gap-2 hover:text-gray-300"
-    onClick={handleClose}
-  >
-    <FaMoneyCheckAlt /> Payment History
-  </NavLink>
-)}
+          {/* -------Customer------- */}
+          {!roleLoading && role === "customer" && (
+            <NavLink
+              to="/dashboard/paymentHistory"
+              className="flex items-center gap-2 hover:text-gray-300"
+              onClick={handleClose}
+            >
+              <FaMoneyCheckAlt /> Payment History
+            </NavLink>
+          )}
 
-{/* -------Provider------- */}
-{!roleLoading && role === "provider" && (
-  <>
-    <NavLink
-      to="/dashboard/myServices"
-      className="flex items-center gap-2 hover:text-gray-300"
-      onClick={handleClose}
-    >
-      <FaTools /> My Services
-    </NavLink>
+          {/* -------Provider------- */}
+          {!roleLoading && role === "provider" && (
+            <>
+              <NavLink
+                to="/dashboard/myServices"
+                className="flex items-center gap-2 hover:text-gray-300"
+                onClick={handleClose}
+              >
+                <FaTools /> My Services
+              </NavLink>
 
-    <NavLink
-      to="/dashboard/providerEarnings"
-      className="flex items-center gap-2 hover:text-gray-300"
-      onClick={handleClose}
-    >
-      <FaDollarSign /> Earnings
-    </NavLink>
-  </>
-)}
-
-
-
+              <NavLink
+                to="/dashboard/providerEarnings"
+                className="flex items-center gap-2 hover:text-gray-300"
+                onClick={handleClose}
+              >
+                <FaDollarSign /> Earnings
+              </NavLink>
+            </>
+          )}
         </nav>
       </div>
 

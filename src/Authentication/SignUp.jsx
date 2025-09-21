@@ -1,18 +1,21 @@
+
+
 import { useState } from "react";
-import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import useAuth from "../hooks/useAuth";
 
 const Register = () => {
-  const axiosSecure = useAxiosSecure();
+  const { register } = useAuth();
   const navigate = useNavigate();
-  const location =useLocation()
+  const location = useLocation();
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     email: "",
     phone: "",
-    role: "customer" 
+    role: "customer"
   });
 
   const handleChange = (e) => {
@@ -21,7 +24,6 @@ const Register = () => {
       [e.target.name]: e.target.value
     });
   };
-
 
   const isValidBDPhone = (phone) => {
     const bdPhoneRegex = /^(?:\+?88)?01[3-9]\d{8}$/;
@@ -33,7 +35,6 @@ const Register = () => {
 
     const { username, password, email, phone, role } = formData;
 
-    
     if (!username || !password || !email || !phone || !role) {
       return toast.error("All fields are required!");
     }
@@ -43,19 +44,27 @@ const Register = () => {
     }
 
     try {
-      const res = await axiosSecure.post("/api/auth/register", formData);
-      toast.success(res.data.message || "Registration successful!");
-      navigate(`${location.state ? location.state : "/"}`)
-      setFormData({ username: "", password: "", email: "", phone: "", role: "customer" });
+    
+      const res = await register(formData);
+
+      toast.success(res.message || "Registration successful!");
+      navigate(location.state ? location.state : "/");
+
+      // Reset form
+      setFormData({
+        username: "",
+        password: "",
+        email: "",
+        phone: "",
+        role: "customer"
+      });
     } catch (err) {
-      console.error(err);
-      toast.error(err.response?.data?.message || "Registration failed!");
+      toast.error(err || "Registration failed!");
     }
   };
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
-     
       <h2 className="text-2xl font-bold mb-6 text-center">Create an Account</h2>
       <form onSubmit={handleRegister} className="space-y-4">
         {/* Username */}
@@ -102,7 +111,7 @@ const Register = () => {
           className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
-        {/* Role Selection */}
+        {/* Role */}
         <select
           name="role"
           value={formData.role}
