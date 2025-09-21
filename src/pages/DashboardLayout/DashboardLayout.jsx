@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router";
-import { FaHome, FaTools, FaCog, FaBars, FaHourglassHalf, FaUserShield, FaMoneyCheckAlt, FaDollarSign } from "react-icons/fa";
+import { FaHome, FaTools, FaCog, FaBars, FaHourglassHalf, FaUserShield, FaMoneyCheckAlt, FaDollarSign, FaUserCircle } from "react-icons/fa";
 import useUserRole from "../../hooks/useUserRole";
 
 const DashboardLayout = () => {
@@ -93,6 +93,15 @@ const DashboardLayout = () => {
               >
                 <FaTools /> My Services
               </NavLink>
+
+              <NavLink
+  to="/dashboard/providerProfile"
+  className="flex items-center gap-2 hover:text-gray-300"
+  onClick={handleClose}
+>
+  <FaUserCircle /> Provider Profile
+</NavLink>
+
 
               <NavLink
                 to="/dashboard/providerEarnings"

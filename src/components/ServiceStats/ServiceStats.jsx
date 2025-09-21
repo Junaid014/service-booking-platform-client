@@ -59,7 +59,7 @@ const ServiceStats = () => {
                      {/* Stats Grid */}
                      <div
                             ref={ref}
-                            className="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-8 bg-gradient-to-br from-[#eff1f5] via-[#f4f6ff] to-[#e9eeff] rounded-2xl p-4 md:p-8 border border-[#b4bdb266]"
+                            className="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-8 bg-white rounded-2xl p-4 md:p-8 border border-[#b4bdb266]"
                      >
                             {stats.map((item, idx) => (
                                    <div key={idx} className="w-full text-center p-4 md:p-6">

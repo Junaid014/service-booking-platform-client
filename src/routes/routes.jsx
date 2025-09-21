@@ -21,6 +21,7 @@ import ProviderEarnings from "../pages/Dashboard/Seller/ProviderEarnings ";
 import Forbidden from "../Forbidden/Forbidden";
 import MyProfile from "../pages/Dashboard/Customer/MyProfile";
 import ErrorElement from "../pages/ErrorElement/ErrorElement";
+import ProviderProfile from "../pages/Dashboard/Seller/ProviderProfile";
 
 
 
@@ -90,6 +91,10 @@ export const router = createBrowserRouter([
       {
         path:'providerEarnings',
         element:<ProviderEarnings/>
+      },
+      {
+        path:'providerProfile',
+        element:<ProviderProfile/>
       },
 
 

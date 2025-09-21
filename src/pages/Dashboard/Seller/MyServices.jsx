@@ -17,9 +17,9 @@ const MyServices = () => {
   const { data: services = [], refetch } = useQuery({
   queryKey: ["services", user?.email],
   queryFn: async () => {
-    console.log("Fetching services for:", user?.email); // 🔥
+    console.log("Fetching services for:", user?.email);
     const res = await axiosSecure.get(`/services?email=${user?.email}`);
-    console.log("Services received:", res.data); // 🔥
+    console.log("Services received:", res.data); 
     return res.data;
   },
   enabled: !!user?.email,
