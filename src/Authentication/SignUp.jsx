@@ -1,7 +1,7 @@
 
 
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
 
@@ -131,6 +131,16 @@ const Register = () => {
           Register
         </button>
       </form>
+
+      <p className="text-center text-gray-600 mt-6">
+        Already Have an Account?{" "}
+        <Link
+          to="/auth/login"
+          className="text-[#cc3273] hover:underline font-semibold"
+        >
+          Login
+        </Link>
+      </p>
     </div>
   );
 };

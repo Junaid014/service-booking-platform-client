@@ -20,6 +20,7 @@ import PaymentHistory from "../pages/Dashboard/Customer/PaymentHistory";
 import ProviderEarnings from "../pages/Dashboard/Seller/ProviderEarnings ";
 import Forbidden from "../Forbidden/Forbidden";
 import MyProfile from "../pages/Dashboard/Customer/MyProfile";
+import ErrorElement from "../pages/ErrorElement/ErrorElement";
 
 
 
@@ -27,6 +28,7 @@ export const router = createBrowserRouter([
 
   {
     path: "/",
+     errorElement: <ErrorElement />,
     Component: Root,
 
     children: [
@@ -58,8 +60,9 @@ export const router = createBrowserRouter([
       },
       {
         path:'forbidden',
-        element:Forbidden
-      }
+        element:<Forbidden/>
+      },
+      
 
       // will be provider route 
 
@@ -88,6 +91,7 @@ export const router = createBrowserRouter([
         path:'providerEarnings',
         element:<ProviderEarnings/>
       },
+
 
       // admin
       {
