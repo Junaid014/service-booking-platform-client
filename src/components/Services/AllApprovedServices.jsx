@@ -85,19 +85,15 @@ const AllApprovedServices = () => {
                   alt={service.title}
                   className="w-full h-48 object-cover"
                 />
-                <div className="p-4 bg-white text-center">
-                  <h3
-                    className="text-md py-2 font-semibold text-[#0b2b14] truncate"
-                    title={service.title}
-                  >
-                    {service.title}
-                  </h3>
-                  <p className="text-sm text-[#0b2b14] mt-1">
-                    Price:{" "}
-                    <span className="font-semibold">{service.price} $</span>{" "}
-                    per/hour
-                  </p>
-                </div>
+                <div className="p-4 text-center">
+                <h3
+                  className="text-md font-semibold truncate"
+                  title={service.title}
+                >
+                  {service.title}
+                </h3>
+                
+              </div>
               </Link>
             ))}
           </div>

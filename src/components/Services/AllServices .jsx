@@ -48,9 +48,7 @@ const AllServices = () => {
               >
                 {service.title}
               </h3>
-              <p className="text-sm text-[#0b2b14] mt-1">
-                Price: <span className="font-semibold">{service.price} $</span> per/hour
-              </p>
+              
             </div>
           </Link>
         ))}
