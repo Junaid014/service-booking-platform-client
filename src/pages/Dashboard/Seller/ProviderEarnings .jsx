@@ -8,29 +8,41 @@ import {
 } from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
+import Loading from "../../../Shared/Loading";
 
 const ProviderEarnings = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [summary, setSummary] = useState(null);
   const [history, setHistory] = useState([]);
-  const [selected, setSelected] = useState(null); // modal data
+  const [selected, setSelected] = useState(null);
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     if (user?.email) {
+      setLoading(true); 
       axiosSecure
         .get(`/payments/provider/${user.email}`)
         .then((res) => {
           setSummary(res.data.summary);
           setHistory(res.data.history);
         })
-        .catch((err) => console.error(err));
+        .catch((err) => console.error(err))
+        .finally(() => setLoading(false)); 
     }
   }, [user, axiosSecure]);
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center mt-20">
+        <Loading /> 
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-6xl mx-auto mt-10  md:px-6">
-      <h2 className="md:text-3xl text-center text-lg font-bold  text-[#cc3273] mb-8">
+    <div className="max-w-6xl mx-auto mt-10 md:px-6">
+      <h2 className="md:text-3xl text-center text-lg font-bold text-[#cc3273] mb-8">
         My Earnings Dashboard
       </h2>
 
@@ -68,25 +80,26 @@ const ProviderEarnings = () => {
       {/* Transaction History */}
       <div className="bg-white shadow-lg rounded-2xl overflow-x-auto">
         {history.length === 0 ? (
-         <div className="flex flex-col items-center justify-center p-10 text-gray-500">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className="h-12 w-12 text-gray-400 mb-3"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M9 17v-2a4 4 0 118 0v2m-6 4h4m-2-18a9 9 0 100 18 9 9 0 000-18z"
-    />
-  </svg>
-  <p className="text-lg font-medium">No sales history found</p>
-  <p className="text-sm text-gray-400">Your earnings will appear here once you have sales.</p>
-</div>
-
+          <div className="flex flex-col items-center justify-center p-10 text-gray-500">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-12 w-12 text-gray-400 mb-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 17v-2a4 4 0 118 0v2m-6 4h4m-2-18a9 9 0 100 18 9 9 0 000-18z"
+              />
+            </svg>
+            <p className="text-lg font-medium">No sales history found</p>
+            <p className="text-sm text-gray-400">
+              Your earnings will appear here once you have sales.
+            </p>
+          </div>
         ) : (
           <table className="min-w-full border-collapse">
             <thead>

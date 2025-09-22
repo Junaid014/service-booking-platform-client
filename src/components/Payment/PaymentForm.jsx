@@ -21,11 +21,11 @@ const PaymentForm = ({ service, subtotal }) => {
     setProcessing(true);
 
     try {
-      console.log("💰 Sending price to backend:", subtotal); 
+      console.log("💰 Sending price to backend:", subtotal);
 
-    
+
       const { data } = await axiosSecure.post("/create-payment-intent", {
-        price: subtotal, 
+        price: subtotal,
       });
 
       console.log("🧾 Client secret from backend:", data);
@@ -48,10 +48,11 @@ const PaymentForm = ({ service, subtotal }) => {
           serviceId: service._id,
           serviceTitle: service.title,
           buyerEmail: user.email,
-          providerEmail: service.userEmail, 
+          providerEmail: service.userEmail,
           price: subtotal,
           transactionId: result.paymentIntent.id,
           date: new Date(),
+         
         };
 
         console.log("💾 Saving payment info:", paymentInfo);

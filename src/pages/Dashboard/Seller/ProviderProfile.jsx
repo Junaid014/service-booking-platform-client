@@ -20,7 +20,8 @@ const ProviderProfile = () => {
       try {
         // Profile
         const userRes = await axiosSecure.get(`/users/${user.email}`);
-        setProfile(userRes.data.user);
+setProfile(userRes.data.user);
+
 
         
         const servicesRes = await axiosSecure.get(`/services?email=${user.email}`);

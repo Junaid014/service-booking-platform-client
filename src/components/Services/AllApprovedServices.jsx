@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Link } from "react-router";
 import { FaSearch } from "react-icons/fa";
+import Loading from "../../Shared/Loading";
 
 const AllApprovedServices = () => {
   const axiosSecure = useAxiosSecure();
@@ -64,9 +65,7 @@ const AllApprovedServices = () => {
       </div>
 
       {isLoading ? (
-        <div className="text-center text-lg font-semibold py-10">
-          Loading...
-        </div>
+        <Loading/>
       ) : paginatedServices.length === 0 ? (
         <p className="text-center text-gray-500   py-10 rounded-lg  text-lg font-medium">
   🚫 No services found. Try a different search.

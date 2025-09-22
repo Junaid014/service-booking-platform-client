@@ -65,23 +65,19 @@ export default function Footer({ className = "", withCopyrightYear = new Date().
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <a role="button" target="_blank" rel="noreferrer" href="https://www.facebook.com/sheba.xyz/" aria-label="Sheba Facebook" className="inline-flex items-center">
+                  <a role="button" target="_blank" rel="noreferrer" href="https://www.facebook.com/" aria-label="Sheba Facebook" className="inline-flex items-center">
                     <img src="https://cdn-marketplacedev.s3.ap-south-1.amazonaws.com/social/facebook.svg" alt="Sheba.xyz Facebook" className="h-6 w-6" />
                   </a>
-                  <a role="button" target="_blank" rel="noreferrer" href="https://www.linkedin.com/company/sheba/" aria-label="Sheba LinkedIn" className="inline-flex items-center">
+                  <a role="button" target="_blank" rel="noreferrer" href="linkedin.com/" aria-label="Sheba LinkedIn" className="inline-flex items-center">
                     <img src="https://cdn-marketplacedev.s3.ap-south-1.amazonaws.com/social/linkedin.svg" alt="Sheba.xyz Linkedin" className="h-6 w-6" />
                   </a>
-                  <a role="button" target="_blank" rel="noreferrer" href="https://www.instagram.com/sheba.xyz.official/" aria-label="Sheba Instagram" className="inline-flex items-center">
+                  <a role="button" target="_blank" rel="noreferrer" href="https://www.instagram.com/?hl=en" aria-label="Sheba Instagram" className="inline-flex items-center">
                     <img src="https://cdn-marketplacedev.s3.ap-south-1.amazonaws.com/social/instagram.svg" alt="Sheba.xyz Instagram" className="h-6 w-6" />
                   </a>
                 </div>
               </div>
 
-              <div className="mt-6">
-                <div className="rounded overflow-hidden shadow-sm">
-                  <img src="https://cdn-marketplacexyz.s3.ap-south-1.amazonaws.com/sheba_xyz/images/jpg/payment_banner.jpg" alt="payment methods" className="w-full h-20 object-cover" />
-                </div>
-              </div>
+              
             </div>
           </div>
 

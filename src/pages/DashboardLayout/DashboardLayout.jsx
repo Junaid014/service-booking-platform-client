@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router";
-import { FaHome, FaTools, FaCog, FaBars, FaHourglassHalf, FaUserShield, FaMoneyCheckAlt, FaDollarSign, FaUserCircle } from "react-icons/fa";
+import { FaHome, FaTools, FaCog, FaBars, FaHourglassHalf, FaUserShield, FaMoneyCheckAlt, FaDollarSign, FaUserCircle, FaChartBar, FaFireAlt } from "react-icons/fa";
 import useUserRole from "../../hooks/useUserRole";
 
 const DashboardLayout = () => {
@@ -17,7 +17,7 @@ const DashboardLayout = () => {
       if (role === "customer") {
         navigate("/dashboard/paymentHistory", { replace: true });
       } else if (role === "provider") {
-        navigate("/dashboard/providerEarnings", { replace: true });
+        navigate("/dashboard/providerProfile", { replace: true });
       } else if (role === "admin") {
         navigate("/dashboard/pendingServices", { replace: true });
       }
@@ -61,6 +61,14 @@ const DashboardLayout = () => {
               >
                 <FaHourglassHalf /> Pending Services
               </NavLink>
+              <NavLink
+                to="/dashboard/adminStats"
+                className="flex items-center gap-2 hover:text-gray-300"
+                onClick={handleClose}
+              >
+                <FaChartBar /> Admin Stats
+              </NavLink>
+
 
               <NavLink
                 to="/dashboard/makeAdmin"
@@ -69,6 +77,15 @@ const DashboardLayout = () => {
               >
                 <FaUserShield /> Make Admin
               </NavLink>
+
+              <NavLink
+                to="/dashboard/makeTrending"
+                className="flex items-center gap-2 hover:text-gray-300"
+                onClick={handleClose}
+              >
+                <FaFireAlt /> Make Trending
+              </NavLink>
+
             </>
           )}
 
@@ -86,6 +103,14 @@ const DashboardLayout = () => {
           {/* -------Provider------- */}
           {!roleLoading && role === "provider" && (
             <>
+
+              <NavLink
+                to="/dashboard/providerProfile"
+                className="flex items-center gap-2 hover:text-gray-300"
+                onClick={handleClose}
+              >
+                <FaUserCircle /> Provider Profile
+              </NavLink>
               <NavLink
                 to="/dashboard/myServices"
                 className="flex items-center gap-2 hover:text-gray-300"
@@ -94,13 +119,7 @@ const DashboardLayout = () => {
                 <FaTools /> My Services
               </NavLink>
 
-              <NavLink
-  to="/dashboard/providerProfile"
-  className="flex items-center gap-2 hover:text-gray-300"
-  onClick={handleClose}
->
-  <FaUserCircle /> Provider Profile
-</NavLink>
+
 
 
               <NavLink

@@ -25,15 +25,15 @@ const PaymentHistory = () => {
 
   // Submit Review
   const handleSubmitReview = async () => {
-     if (!rating || !comment) {
-    Swal.fire({
-      title: "Missing Fields",
-      text: "Please provide both rating and comment.",
-      icon: "warning",
-      confirmButtonColor: "#cc3273"
-    });
-    return;
-  }
+    if (!rating || !comment) {
+      Swal.fire({
+        title: "Missing Fields",
+        text: "Please provide both rating and comment.",
+        icon: "warning",
+        confirmButtonColor: "#cc3273"
+      });
+      return;
+    }
 
     const reviewData = {
       serviceId: reviewModal.serviceId,
@@ -58,12 +58,11 @@ const PaymentHistory = () => {
     } catch (error) {
       console.error(error);
       Swal.fire({
-        title: "Review Submitted!",
-        text: "Thank you for your feedback.",
-        icon: "success",
+        title: "Error",
+        text: "Something went wrong while submitting review.",
+        icon: "error",
         confirmButtonColor: "#cc3273"
       });
-
     }
   };
 
@@ -104,7 +103,7 @@ const PaymentHistory = () => {
                   <th className="p-3">Service</th>
                   <th className="p-3">Provider</th>
                   <th className="p-3">Price</th>
-                  <th className="p-3">Date</th>
+                  <th className="p-3">Service Date</th>
                   <th className="p-3">Transaction ID</th>
                   <th className="p-3">Action</th>
                 </tr>
@@ -121,7 +120,9 @@ const PaymentHistory = () => {
                       ${p.price}
                     </td>
                     <td className="p-3 text-sm text-gray-500">
-                      {new Date(p.date).toLocaleDateString()}
+                      {p.date
+                        ? new Date(p.date).toLocaleDateString()
+                        : "Not specified"}
                     </td>
                     <td className="p-3 text-xs text-gray-400">
                       {p.transactionId}
@@ -153,12 +154,13 @@ const PaymentHistory = () => {
                 <div className="flex justify-between items-center mt-2">
                   <p className="text-green-600 font-bold">${p.price}</p>
                   <p className="text-xs text-gray-400">
-                    {new Date(p.date).toLocaleDateString()}
+                    {p.date
+                      ? new Date(p.date).toLocaleDateString()
+                      : "Not specified"}
                   </p>
                 </div>
 
                 <div className="flex justify-between gap-4 mt-2">
-
                   <button
                     onClick={() => setSelectedPayment(p)}
                     className="flex items-center gap-1 px-5 py-1.5 text-xs cursor-pointer text-blue-600 border border-blue-600 bg-white rounded-lg font-semibold shadow-md hover:text-white hover:bg-blue-600 transition"
@@ -194,12 +196,10 @@ const PaymentHistory = () => {
             <p className="text-green-600 font-semibold">
               <span className="font-semibold text-gray-700">Price:</span> ${selectedPayment.price}
             </p>
-            <p><span className="font-semibold">Date:</span> {new Date(selectedPayment.date).toLocaleDateString()}</p>
+            <p><span className="font-semibold">Service Date:</span> {selectedPayment.date ? new Date(selectedPayment.date).toLocaleDateString() : "Not specified"}</p>
             <p className="text-xs text-gray-400">
               <span className="font-semibold text-gray-600">Transaction ID:</span> {selectedPayment.transactionId}
             </p>
-
-
           </div>
         </div>
       )}
@@ -207,27 +207,26 @@ const PaymentHistory = () => {
       {/* ✅ Review Modal */}
       {reviewModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-          {/* overlay */}
           <div
             className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             onClick={() => setReviewModal(null)}
           ></div>
 
-          {/* modal box */}
           <div className="relative bg-white rounded-xl shadow-lg w-11/12 max-w-sm p-6 z-10">
             <h3 className="text-xl font-bold text-[#cc3273] mb-4">
               Leave a Review
             </h3>
 
-            {/*  Rating */}
+            {/* Rating */}
             <div className="flex gap-1 mb-4">
               {[1, 2, 3, 4, 5].map((star) => (
                 <FaStar
                   key={star}
-                  className={`cursor-pointer text-2xl ${star <= (hover || rating)
-                    ? "text-yellow-400"
-                    : "text-gray-300"
-                    }`}
+                  className={`cursor-pointer text-2xl ${
+                    star <= (hover || rating)
+                      ? "text-yellow-400"
+                      : "text-gray-300"
+                  }`}
                   onClick={() => setRating(star)}
                   onMouseEnter={() => setHover(star)}
                   onMouseLeave={() => setHover(0)}

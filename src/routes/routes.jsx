@@ -22,6 +22,8 @@ import Forbidden from "../Forbidden/Forbidden";
 import MyProfile from "../pages/Dashboard/Customer/MyProfile";
 import ErrorElement from "../pages/ErrorElement/ErrorElement";
 import ProviderProfile from "../pages/Dashboard/Seller/ProviderProfile";
+import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
+import MakeTrending from "../pages/Dashboard/Admin/MakeTrending";
 
 
 
@@ -100,12 +102,20 @@ export const router = createBrowserRouter([
 
       // admin
       {
+        path:'makeTrending',
+        element:<MakeTrending/>
+      },
+      {
         path:'pendingServices',
         element:<PendingServices/>
       },
       {
         path:'makeAdmin',
         element:<MakeAdmin/>
+      },
+      {
+        path:'adminStats',
+        element:<AdminDashboard/>
       }
     ]},
 

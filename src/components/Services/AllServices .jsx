@@ -19,7 +19,7 @@ const AllServices = () => {
     return <Loading />;
   }
 
-  // ছোট স্ক্রিনে 6, বড় স্ক্রিনে 8
+  
   const isSmallScreen = window.innerWidth < 768; 
   const limitedServices = isSmallScreen ? services.slice(0, 6) : services.slice(0, 8);
 
@@ -56,7 +56,7 @@ const AllServices = () => {
         ))}
       </div>
 
-      {/* যদি মোট সার্ভিস > দেখানো সার্ভিস সংখ্যা হয় তখন বাটন দেখাবে */}
+      
       {services.length > limitedServices.length && (
         <div className="flex justify-center mt-8 mb-8">
           <Link

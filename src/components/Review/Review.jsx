@@ -92,7 +92,7 @@ const ReviewCard = ({ review }) => {
 const Review = () => {
   return (
     <>
-    <div className=" mt-14  max-w-[1360px] lg:px-0 px-3 md:px-3  mx-auto ">
+    <div className=" mt-24  max-w-[1360px] lg:px-0 px-3 md:px-3  mx-auto ">
         <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
          SOME HAPPY FACES
         </h3>

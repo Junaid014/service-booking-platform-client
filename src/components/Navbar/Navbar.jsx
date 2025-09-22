@@ -102,7 +102,7 @@ const Navbar = () => {
             </button>
           ) : (
             <Link
-              to="/auth/login"
+              to="/auth/signUp"
               className="md:px-5 px-3 py-2 md:py-2.5 text-xs md:text-base cursor-pointer text-[#cc3273] border border-[#cc3273] bg-white rounded-lg font-medium shadow-md hover:text-white hover:bg-[#cc3273] transition-colors duration-300"
             >
               Get Started
