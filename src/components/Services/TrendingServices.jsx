@@ -21,7 +21,7 @@ const TrendingServices = () => {
   return (
     <div className="max-w-[1360px] mx-auto  pt-20 pb-6 relative">
       {/* Heading */}
-      <h2 className="text-xl lg:pl-0 pl-3 md:text-3xl font-bold text-gray-800 mb-8">
+      <h2 className="text-xl lg:pl-0 pl-3 md:text-4xl font-bold md:mb-14 mb-4 text-gray-800 ">
        Trending <span className="text-[#cc3273]">Services</span>
       </h2>
 
@@ -63,12 +63,12 @@ const TrendingServices = () => {
       </Swiper>
 
       {/* Left Arrow */}
-      <div className="swiper-button-prev-custom absolute top-1/2 -left-4 transform -translate-y-1/2 z-10 cursor-pointer bg-pink-500 shadow-lg w-10 h-10 flex items-center justify-center rounded-full">
+      <div className="swiper-button-prev-custom absolute top-58 -left-4 transform -translate-y-1/2 z-10 cursor-pointer bg-pink-500 shadow-lg w-10 h-10 flex items-center justify-center rounded-full">
         <FaChevronLeft className="text-white" />
       </div>
 
       {/* Right Arrow */}
-      <div className="swiper-button-next-custom absolute top-1/2 -right-4 transform -translate-y-1/2 z-10 cursor-pointer bg-pink-500 shadow-lg w-10 h-10 flex items-center justify-center rounded-full">
+      <div className="swiper-button-next-custom absolute top-58 -right-4 transform -translate-y-1/2 z-10 cursor-pointer bg-pink-500 shadow-lg w-10 h-10 flex items-center justify-center rounded-full ">
         <FaChevronRight className="text-white" />
       </div>
     </div>

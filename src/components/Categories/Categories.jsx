@@ -21,7 +21,6 @@ import Loading from "../../Shared/Loading";
 import { Link } from "react-router";
 import { FaRegSadTear } from "react-icons/fa";
 
-
 const categories = [
   { name: "Beauty & Wellness", icon: Scissors, color: "#dcf3ff" },
   { name: "Cleaning", icon: Sparkles, color: "#e5f9f4" },
@@ -30,7 +29,6 @@ const categories = [
   { name: "Event & Lifestyle", icon: Calendar, color: "#eefbe3" },
   { name: "Furniture Assembly", icon: Wrench, color: "#e6e5ff" },
   { name: "Gardening", icon: TreePine, color: "#eef7fe" },
-
   { name: "General Mounting", icon: Drill, color: "#fffdf1" },
   { name: "IT & Tech Services", icon: Laptop, color: "#dcf3ff" },
   { name: "Painting", icon: Paintbrush, color: "#e5f9f4" },
@@ -44,13 +42,20 @@ export default function CategoryServices() {
   const axiosSecure = useAxiosSecure();
   const [selectedCategory, setSelectedCategory] = useState("Beauty & Wellness");
 
- const {
+  const {
     data: services = [],
     isLoading,
   } = useQuery({
-    queryKey: ["approvedServices", selectedCategory], 
+    queryKey: ["approvedServices", selectedCategory],
     queryFn: async () => {
-      const url = `/services/approved?category=${encodeURIComponent(selectedCategory)}`; 
+      let url;
+      if (selectedCategory === "Trending") {
+        url = `/services/trending`;
+      } else {
+        url = `/services/approved?category=${encodeURIComponent(
+          selectedCategory
+        )}`;
+      }
       const res = await axiosSecure.get(url);
       return res.data;
     },
@@ -59,11 +64,15 @@ export default function CategoryServices() {
     refetchOnWindowFocus: false,
   });
 
-  if (isLoading) return <Loading/>;
+  if (isLoading) return <Loading />;
 
   return (
     <div className=" max-w-[1360px] lg:px-0 px-3 md:px-3  mx-auto  mt-20">
-      
+      {/* Heading */}
+<h2 className="text-xl lg:pl-0 pl-3 md:text-4xl font-bold md:mb-12 mb-4 text-gray-800 ">
+  Browse Services by <span className="text-[#cc3273]">Category</span>
+</h2>
+
       <div className="grid lg:grid-cols-7  md:grid-cols-5 grid-cols-3 md:gap-4 gap-2 border-b pb-4">
         {categories.map((cat) => {
           const Icon = cat.icon;
@@ -80,8 +89,6 @@ export default function CategoryServices() {
               }}
             >
               <Icon size={24} />
-
-              
               <span
                 className={`mt-1 text-xs text-gray-800  font-semibold text-center ${
                   isActive ? "font-semibold" : ""
@@ -98,21 +105,19 @@ export default function CategoryServices() {
       <div className="flex flex-wrap gap-3 mt-6">
         {services.length > 0 ? (
           services.map((s) => (
-            <Link 
-             to={`/services/${s._id}`}
+            <Link
+              to={`/services/${s._id}`}
               key={s._id}
-              className="px-4 py-2 border rounded-full text-sm cursor-pointer bg-gray-50 hover:bg-gray-300"
+              className="px-4 py-2 border rounded-full text-sm cursor-pointer hover:text-white bg-gray-50 hover:bg-pink-400"
             >
-
-       
               {s.title}
             </Link>
           ))
         ) : (
-         <p className="flex flex-col items-center justify-center text-gray-500 mt-10">
-  <FaRegSadTear className="text-5xl mb-3 text-gray-400" />
-  <span className="font-semibold text-lg">No services found.</span>
-</p>
+          <p className="flex flex-col items-center justify-center text-gray-500 mt-10">
+            <FaRegSadTear className="text-5xl mb-3 text-gray-400" />
+            <span className="font-semibold text-lg">No services found.</span>
+          </p>
         )}
       </div>
     </div>
