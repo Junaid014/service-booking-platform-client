@@ -1,11 +1,12 @@
+
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 
-const PaymentForm = ({ service, subtotal }) => {
+const PaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
@@ -13,6 +14,10 @@ const PaymentForm = ({ service, subtotal }) => {
   const [processing, setProcessing] = useState(false);
   const [paid, setPaid] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  
+  const { subtotal, date, service } = location.state || {};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,15 +26,12 @@ const PaymentForm = ({ service, subtotal }) => {
     setProcessing(true);
 
     try {
-      console.log("💰 Sending price to backend:", subtotal);
-
-
+     
       const { data } = await axiosSecure.post("/create-payment-intent", {
         price: subtotal,
       });
 
-      console.log("🧾 Client secret from backend:", data);
-
+     
       const result = await stripe.confirmCardPayment(data.clientSecret, {
         payment_method: {
           card: elements.getElement(CardElement),
@@ -39,11 +41,10 @@ const PaymentForm = ({ service, subtotal }) => {
         },
       });
 
-      console.log("✅ Payment result:", result);
-
       if (result.error) {
         Swal.fire("Error", result.error.message, "error");
       } else if (result.paymentIntent.status === "succeeded") {
+       
         const paymentInfo = {
           serviceId: service._id,
           serviceTitle: service.title,
@@ -51,11 +52,9 @@ const PaymentForm = ({ service, subtotal }) => {
           providerEmail: service.userEmail,
           price: subtotal,
           transactionId: result.paymentIntent.id,
-          date: new Date(),
-         
+          date: service.date, 
+          createdAt: new Date(),
         };
-
-        console.log("💾 Saving payment info:", paymentInfo);
 
         await axiosSecure.post("/payments", paymentInfo);
 
@@ -77,11 +76,16 @@ const PaymentForm = ({ service, subtotal }) => {
       className="max-w-md mt-10 mx-auto p-6 shadow-lg border border-gray-200 rounded bg-white"
     >
       <h2 className="text-xl font-semibold mb-2 text-center text-[#cc3273]">
-        Payment for {service.title}
+        Payment for {service?.title}
       </h2>
       <h3 className="font-semibold roboto mb-4 text-center">
         Pay {subtotal} $
       </h3>
+
+    
+      <p className="text-center text-sm text-gray-600 mb-4">
+        Selected Date: <span className="font-medium">{date}</span>
+      </p>
 
       <CardElement
         options={{
@@ -111,6 +115,5 @@ const PaymentForm = ({ service, subtotal }) => {
     </form>
   );
 };
-
 
 export default PaymentForm;
