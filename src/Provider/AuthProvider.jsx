@@ -32,6 +32,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (formData) => {
     try {
       const res = await axiosSecure.post("/api/auth/register", formData);
+        console.log("Register API response:", res.data);  // 🔍 debug
 
       if (res.data.profile && res.data.token) {
         setUser(res.data.profile);
@@ -46,6 +47,30 @@ export const AuthProvider = ({ children }) => {
       throw err.response?.data?.message || "Registration failed!";
     }
   };
+
+  // otp
+//   const sendOtp = async (phone) => {
+//   try {
+//     const res = await axiosSecure.post("/api/auth/send-otp", { phone });
+//     return res.data; // { message: "...", expiresAt: ... }
+//   } catch (err) {
+//     throw err.response?.data?.message || "OTP sending failed!";
+//   }
+// };
+
+// const verifyOtp = async ({ phone, otp }) => {
+//   try {
+//     const res = await axiosSecure.post("/api/auth/verify-otp", { phone, otp });
+//     if (res.data.profile && res.data.token) {
+//       setUser(res.data.profile);
+//       localStorage.setItem("user", JSON.stringify(res.data.profile));
+//       localStorage.setItem("token", res.data.token);
+//     }
+//     return res.data;
+//   } catch (err) {
+//     throw err.response?.data?.message || "OTP verification failed!";
+//   }
+// };
 
   //  Logout
   const logout = () => {
@@ -64,7 +89,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, register, logout, loading   }}>
       {children}
     </AuthContext.Provider>
   );

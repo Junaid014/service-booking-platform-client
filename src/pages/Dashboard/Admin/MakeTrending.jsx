@@ -31,7 +31,7 @@ const MakeTrending = () => {
       const res = await axiosSecure.get(
         `/services/approved?title=${debouncedSearch}`
       );
-      return res.data.sort((a, b) => b.soldCount - a.soldCount);
+      return [...res.data].sort((a, b) => b.soldCount - a.soldCount);
     },
     keepPreviousData: true,
     refetchOnWindowFocus: false,

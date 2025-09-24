@@ -6,6 +6,7 @@ import Loading from '../Shared/Loading';
 const PrivetRoute = ({children}) => {
     const{user,loading}=useAuth();
     const location=useLocation();
+    console.log("PrivetRoute location.state:", location.state); 
     
     if(loading){
         return <Loading></Loading>
@@ -13,7 +14,8 @@ const PrivetRoute = ({children}) => {
     if(user){
         return children
     }
-    return <Navigate state={location.pathname} to="/auth/login" ></Navigate>
+     return <Navigate to="/auth/login" state={{ from: location }} replace />;
+
 };
 
 export default PrivetRoute;

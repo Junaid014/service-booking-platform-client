@@ -6,7 +6,7 @@ import Loading from "../../Shared/Loading";
 import useAuth from "../../hooks/useAuth";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import { Loader2, MessageCircleWarning } from "lucide-react";
 const ServiceDetails = () => {
   const { id } = useParams();
   const axiosSecure = useAxios();
@@ -78,13 +78,13 @@ const ServiceDetails = () => {
       navigate("/auth/login", { state: location.pathname });
       return;
     }
-    setIsModalOpen(true); 
+    setIsModalOpen(true);
   };
 
   const confirmAddToCart = () => {
     if (!selectedDate) return;
 
-   
+
     const offset = selectedDate.getTimezoneOffset();
     const localDate = new Date(selectedDate.getTime() - offset * 60000);
 
@@ -97,7 +97,7 @@ const ServiceDetails = () => {
       image: service.image,
       price: Number(service.price),
       quantity,
-      date: localDate.toISOString().split("T")[0], 
+      date: localDate.toISOString().split("T")[0],
       userEmail: service.userEmail
     };
 
@@ -169,11 +169,17 @@ const ServiceDetails = () => {
           <h3 className="md:text-3xl text-lg font-bold text-gray-900 mb-4">
             Customer Reviews
           </h3>
-          {reviewsLoading ? (
-            <p className="text-gray-500 text-sm">Loading reviews...</p>
-          ) : reviews.length === 0 ? (
-            <p className="text-gray-500 text-sm">No reviews yet.</p>
-          ) : (
+         {reviewsLoading ? (
+  <div className="flex items-center gap-2 text-gray-500 text-sm italic bg-gray-50 border border-gray-200 rounded-lg p-3">
+    <Loader2 className="w-4 h-4 animate-spin text-[#cc3273]" />
+    <span>Fetching customer reviews...</span>
+  </div>
+) : reviews.length === 0 ? (
+  <div className="flex items-center gap-2 text-gray-500 text-sm italic bg-gray-50 border border-gray-200 rounded-lg p-3">
+    <MessageCircleWarning className="w-4 h-4 text-[#cc3273]" />
+    <span>No reviews yet. Be the first one!</span>
+  </div>
+) : (
             <>
               <div className="space-y-4">
                 {reviews.slice(0, showAll ? reviews.length : 4).map((review) => (
@@ -195,9 +201,8 @@ const ServiceDetails = () => {
                           {[1, 2, 3, 4, 5].map((star) => (
                             <span
                               key={star}
-                              className={`text-sm ${
-                                star <= review.rating ? "text-yellow-400" : "text-gray-300"
-                              }`}
+                              className={`text-sm ${star <= review.rating ? "text-yellow-400" : "text-gray-300"
+                                }`}
                             >
                               ★
                             </span>
@@ -259,15 +264,37 @@ const ServiceDetails = () => {
 
           {/* Quantity + Add to Cart */}
           <div className="flex md:px-0 px-3 items-center gap-3 mb-4">
-            <button onClick={() => setQuantity((q) => Math.max(1, q - 1))} className="px-3 py-1 cursor-pointer border rounded">
+            <button
+              onClick={() => {
+                if (!user) {
+                  navigate("/auth/login", { state: location.pathname });
+                  return;
+                }
+                setQuantity((q) => Math.max(1, q - 1));
+              }}
+              className="px-3 py-1 cursor-pointer border rounded"
+            >
               -
             </button>
+
             <span>{quantity}</span>
-            <button onClick={() => setQuantity((q) => q + 1)} className="px-3 py-1 border cursor-pointer rounded">
+
+            <button
+              onClick={() => {
+                if (!user) {
+                  navigate("/auth/login", { state: location.pathname });
+                  return;
+                }
+                setQuantity((q) => q + 1);
+              }}
+              className="px-3 py-1 border cursor-pointer rounded"
+            >
               +
             </button>
+
             <p className="font-semibold text-sm text-gray-800">hour</p>
           </div>
+
 
           <button
             onClick={handleAddToCart}
@@ -384,19 +411,19 @@ const ServiceDetails = () => {
             <DatePicker
               selected={selectedDate}
               onChange={(date) => setSelectedDate(date)}
-              minDate={new Date()} 
+              minDate={new Date()}
               inline
             />
             <div className="mt-4 flex justify-end gap-2">
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
+                className="px-4 cursor-pointer py-2 rounded bg-gray-200 hover:bg-gray-300"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmAddToCart}
-                className="px-4 py-2 rounded bg-[#cc3273] text-white hover:bg-pink-700"
+                className="px-4 py-2 cursor-pointer rounded bg-[#cc3273] text-white hover:bg-pink-700"
               >
                 Confirm
               </button>

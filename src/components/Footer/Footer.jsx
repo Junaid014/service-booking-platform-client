@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Footer({ className = "", withCopyrightYear = new Date().getFullYear() }) {
   return (
-    <footer id="footer" className={`bg-gray-50 mt-20 text-gray-800 ${className}`} aria-labelledby="footer-heading">
+    <footer id="footer" className={`bg-gray-50 mt-20 text-gray-800 border-t border-t-gray-300 ${className}`} aria-labelledby="footer-heading">
       <div className=" max-w-[1360px] lg:px-0 px-3 md:px-3  mx-auto">
         <div className="pt-10">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
