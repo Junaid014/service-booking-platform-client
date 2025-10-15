@@ -202,12 +202,11 @@
 
 
 
-
-
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; 
 
 const Register = () => {
   const { register } = useAuth();
@@ -221,6 +220,8 @@ const Register = () => {
     phone: "",
     role: "customer"
   });
+
+  const [showPassword, setShowPassword] = useState(false); 
 
   const handleChange = (e) => {
     setFormData({
@@ -248,7 +249,6 @@ const Register = () => {
     }
 
     try {
-    
       const res = await register(formData);
 
       toast.success(res.message || "Registration successful!");
@@ -282,16 +282,24 @@ const Register = () => {
           className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
-        {/* Password */}
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        {/* Password with eye icon */}
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <span
+            className="absolute right-3 top-2.5 text-gray-500 cursor-pointer"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
 
         {/* Email */}
         <input

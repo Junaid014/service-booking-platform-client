@@ -7,14 +7,18 @@ import Banner from '../../components/Banner/Banner';
 import Footer from '../../components/Footer/Footer';
 import ServiceStats from '../../components/ServiceStats/ServiceStats';
 import TrendingServices from '../../components/Services/TrendingServices';
+import SubscriptionPlans from '../../components/Subscription/SubscriptionPlans ';
 
 const Home = () => {
        return (
               <div>
                      <Banner/>
+                    
                      <TrendingServices/>
                      <CategoryServices/>
+                      
                      <AllServices/>
+                     <SubscriptionPlans/>
                      <WhyChooseUs/>
                      <ServiceStats/>
                      <Review/>

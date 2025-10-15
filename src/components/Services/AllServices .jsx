@@ -24,7 +24,7 @@ const AllServices = () => {
   const limitedServices = isSmallScreen ? services.slice(0, 6) : services.slice(0, 8);
 
   return (
-    <div className="max-w-[1360px] lg:px-0 px-3 md:px-3 mx-auto py-8 mt-12">
+    <div className="max-w-[1360px] lg:px-0 px-3 md:px-3 mx-auto py-14 mt-12">
       <h2 className="md:text-4xl text-xl font-bold mb-6 text-gray-800">
         Services We <span className="text-pink-600">Provide</span>
       </h2>

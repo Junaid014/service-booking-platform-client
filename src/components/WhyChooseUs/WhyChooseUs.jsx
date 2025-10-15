@@ -10,7 +10,7 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section className="max-w-[1360px] lg:px-0 px-3 md:px-3  mx-auto py-12">
+    <section className="max-w-[1360px] lg:px-0 px-3 md:px-3 md:mt-8  mx-auto py-16">
       {/* Heading */}
       <div className="px-3 lg:px-0">
         <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">

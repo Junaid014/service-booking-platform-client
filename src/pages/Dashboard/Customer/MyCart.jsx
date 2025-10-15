@@ -12,7 +12,16 @@ const MyCart = () => {
     setCart(filtered);
   }, [id]);
 
+  // Subtotal
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  
+  const discountPercent = cart[0]?.subscription?.discount
+    ? parseFloat(cart[0].subscription.discount.replace("%", "")) || 0
+    : 0;
+
+  const discountAmount = (subtotal * discountPercent) / 100;
+  const totalAfterDiscount = subtotal - discountAmount;
 
   return (
     <div className="max-w-[1360px] mx-auto px-3 md:px-6 mt-20 mb-8 flex flex-col md:flex-row gap-6">
@@ -24,7 +33,11 @@ const MyCart = () => {
         ) : (
           cart.map((item) => (
             <div key={item._id} className="flex items-center gap-4 border-b py-4">
-              <img src={item.image} alt={item.title} className="w-20 h-16 object-cover rounded-lg" />
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-20 h-16 object-cover rounded-lg"
+              />
               <div className="flex-1">
                 <h3 className="font-medium text-gray-800">{item.title}</h3>
                 <p className="text-sm text-gray-500">
@@ -42,22 +55,39 @@ const MyCart = () => {
       {/* Right side - Summary */}
       <div className="w-full md:w-1/3 bg-gray-50 rounded-xl shadow p-6 h-fit">
         <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
+
         <p className="flex justify-between text-sm mb-2">
           <span>Subtotal ({cart.length} items)</span>
-          <span>${subtotal}</span>
+          <span>${subtotal.toFixed(2)}</span>
         </p>
-        <p className="flex justify-between text-sm mb-4">
-          <span>Total Fee</span>
-          <span>${subtotal}</span>
+
+        {discountPercent > 0 && (
+          <p className="flex justify-between text-sm mb-2 text-green-700">
+            <span>Discount ({discountPercent}%)</span>
+            <span>-${discountAmount.toFixed(2)}</span>
+          </p>
+        )}
+
+        <p className="flex justify-between text-sm font-semibold mb-4">
+          <span>Total</span>
+          <span>${totalAfterDiscount.toFixed(2)}</span>
         </p>
+
         <button
-          onClick={() =>
-            navigate(`/payment/${id}`, { state: { subtotal, service: cart[0] } })
-          }
-          className="w-full py-2 cursor-pointer bg-[#cc3273] text-white rounded-lg font-medium shadow-md hover:bg-pink-700 transition-colors"
-        >
-          Proceed to Payment
-        </button>
+  onClick={() =>
+   navigate(`/payment/${id}`, { 
+  state: { 
+    subtotal, 
+    service: cart[0],
+    date: cart[0].date,
+    subscription: cart[0].subscription 
+  } 
+})
+  }
+  className="w-full py-2 cursor-pointer bg-[#cc3273] text-white rounded-lg font-medium shadow-md hover:bg-pink-700 transition-colors"
+>
+  Proceed to Payment
+</button>
       </div>
     </div>
   );

@@ -24,6 +24,8 @@ import ErrorElement from "../pages/ErrorElement/ErrorElement";
 import ProviderProfile from "../pages/Dashboard/Seller/ProviderProfile";
 import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
 import MakeTrending from "../pages/Dashboard/Admin/MakeTrending";
+import SubscriptionPlans from "../components/Subscription/SubscriptionPlans ";
+import SubscriptionSuccess from "../components/Subscription/SubscriptionSuccess ";
 
 
 
@@ -65,7 +67,19 @@ export const router = createBrowserRouter([
         path:'forbidden',
         element:<Forbidden/>
       },
+      {
+  path: "subscription",
+  Component: SubscriptionPlans, 
+},
+ {
+    path: "/subscription/success",
+    element: <SubscriptionSuccess />,
+  },
       
+// {
+//   path: "subscription/payment/:id",
+//   Component: SubscriptionPayment
+// }
 
       // will be provider route 
 

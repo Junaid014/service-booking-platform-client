@@ -147,14 +147,11 @@
 
 
 
-
-
-
-
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { useLocation, useNavigate, Link } from "react-router";
 import { toast } from "react-toastify";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; 
 
 const Login = () => {
   const { login } = useAuth();
@@ -164,6 +161,8 @@ const Login = () => {
     phone: "",
     password: ""
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -212,15 +211,24 @@ const Login = () => {
           required
           className="w-full px-5 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
         />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-          className="w-full px-5 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
-        />
+        {/* Password with eye icon */}
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            className="w-full px-5 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+          />
+          <span
+            className="absolute right-4 top-3 text-gray-500 cursor-pointer"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
         <button
           type="submit"
           className="w-full cursor-pointer bg-[#cc3273]  text-white font-semibold py-3 rounded-xl shadow-md transition"

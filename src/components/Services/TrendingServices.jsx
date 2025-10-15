@@ -63,12 +63,12 @@ const TrendingServices = () => {
       </Swiper>
 
       {/* Left Arrow */}
-      <div className="swiper-button-prev-custom absolute top-66 -left-4 transform -translate-y-1/2 z-10 cursor-pointer bg-pink-500 shadow-lg w-10 h-10 flex items-center justify-center rounded-full">
+      <div className="swiper-button-prev-custom absolute md:top-66 top-52 -left-4 transform -translate-y-1/2 z-10 cursor-pointer bg-pink-500 shadow-lg w-10 h-10 flex items-center justify-center rounded-full">
         <FaChevronLeft className="text-white" />
       </div>
 
       {/* Right Arrow */}
-      <div className="swiper-button-next-custom absolute top-66 -right-4 transform -translate-y-1/2 z-10 cursor-pointer bg-pink-500 shadow-lg w-10 h-10 flex items-center justify-center rounded-full ">
+      <div className="swiper-button-next-custom absolute md:top-66 top-52 -right-4 transform -translate-y-1/2 z-10 cursor-pointer bg-pink-500 shadow-lg w-10 h-10 flex items-center justify-center rounded-full ">
         <FaChevronRight className="text-white" />
       </div>
     </div>

@@ -40,7 +40,7 @@ const ServiceStats = () => {
        ];
 
        return (
-              <div className="w-11/12 mx-auto my-16">
+              <div className="w-11/12 mx-auto my-18">
                     
                      {/* Heading */}
                      <div className=" text-start mb-12">

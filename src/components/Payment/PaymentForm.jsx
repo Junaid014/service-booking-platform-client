@@ -1,4 +1,3 @@
-
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import Swal from "sweetalert2";
@@ -16,8 +15,15 @@ const PaymentForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  
-  const { subtotal, date, service } = location.state || {};
+  const { subtotal, date, service, subscription } = location.state || {};
+
+const discountPercent = subscription?.discount
+  ? parseFloat(subscription.discount.replace('%', '')) || 0
+  : 0;
+
+  const discountedTotal = discountPercent > 0
+    ? +(subtotal * (1 - discountPercent / 100)).toFixed(2)
+    : subtotal;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,12 +32,11 @@ const PaymentForm = () => {
     setProcessing(true);
 
     try {
-     
+
       const { data } = await axiosSecure.post("/create-payment-intent", {
-        price: subtotal,
+        price: discountedTotal,
       });
 
-     
       const result = await stripe.confirmCardPayment(data.clientSecret, {
         payment_method: {
           card: elements.getElement(CardElement),
@@ -44,15 +49,14 @@ const PaymentForm = () => {
       if (result.error) {
         Swal.fire("Error", result.error.message, "error");
       } else if (result.paymentIntent.status === "succeeded") {
-       
         const paymentInfo = {
           serviceId: service._id,
           serviceTitle: service.title,
           buyerEmail: user.email,
           providerEmail: service.userEmail,
-          price: subtotal,
+          price: discountedTotal,
           transactionId: result.paymentIntent.id,
-          date: service.date, 
+          date: date, 
           createdAt: new Date(),
         };
 
@@ -79,10 +83,9 @@ const PaymentForm = () => {
         Payment for {service?.title}
       </h2>
       <h3 className="font-semibold roboto mb-4 text-center">
-        Pay {subtotal} $
+        Pay {discountedTotal} $ {discountPercent > 0 && `(Discount applied: ${discountPercent}%)`}
       </h3>
 
-    
       <p className="text-center text-sm text-gray-600 mb-4">
         Selected Date: <span className="font-medium">{date}</span>
       </p>
@@ -90,16 +93,8 @@ const PaymentForm = () => {
       <CardElement
         options={{
           style: {
-            base: {
-              fontSize: "16px",
-              color: "#424770",
-              "::placeholder": {
-                color: "#aab7c4",
-              },
-            },
-            invalid: {
-              color: "#9e2146",
-            },
+            base: { fontSize: "16px", color: "#424770", "::placeholder": { color: "#aab7c4" } },
+            invalid: { color: "#9e2146" },
           },
         }}
         className="p-3 border border-gray-200 rounded mb-4"

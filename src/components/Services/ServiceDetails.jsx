@@ -21,6 +21,16 @@ const ServiceDetails = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const modalRef = useRef();
 
+
+ const { data: userWithSubscription, isLoading: userLoading } = useQuery({
+  queryKey: ["userSubscription", user?.email],
+  enabled: !!user?.email,
+  queryFn: async () => {
+    const res = await axiosSecure.get(`/users/${user.email}`);
+    return res.data.user; 
+  },
+});
+
   // Close modal on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -92,13 +102,14 @@ const ServiceDetails = () => {
     const existingIndex = cart.findIndex((item) => item._id === service._id);
 
     const cartItem = {
-      _id: service._id,
-      title: service.title,
-      image: service.image,
-      price: Number(service.price),
-      quantity,
-      date: localDate.toISOString().split("T")[0],
-      userEmail: service.userEmail
+     _id: service._id,
+  title: service.title,
+  image: service.image,
+  price: Number(service.price),
+  quantity,
+  date: localDate.toISOString().split("T")[0],
+  userEmail: user.email,
+  subscription: userWithSubscription?.subscription || null,    
     };
 
     if (existingIndex >= 0) cart[existingIndex] = cartItem;
